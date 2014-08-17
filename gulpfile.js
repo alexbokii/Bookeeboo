@@ -3,9 +3,12 @@ var sass = require('gulp-sass');
 var watch = require('gulp-watch');
 
 gulp.task('default', function() {
-  gulp.src('./scss/*.scss')
+  return gulp.src('./scss/*.scss')
   .pipe(watch(function(files) {
-    return files.pipe(sass())
+    return files.pipe(sass({
+      sourceMap: 'sass',
+      sourceComments: 'map'
+    }))
     .pipe(gulp.dest('./public/stylesheets/'));
   }));
 });
