@@ -7,7 +7,7 @@ router.get('/', function(req, res) {
   res.render('index');
 });
 
-router.get('/api/queue', function (req, res) {
+router.get('/api/queue', function(req, res) {
   booksSearch.search('kittens', 1)
   .then(function(results) {
     res.send(results);
@@ -17,7 +17,8 @@ router.get('/api/queue', function (req, res) {
   });
 });
 
-router.get('/api/unordered', function (req, res) {
+//---unordered---
+router.get('/api/unordered', function(req, res) {
   booksSearch.search('england', 1)
   .then(function(results) {
     res.send(results);
@@ -26,6 +27,10 @@ router.get('/api/unordered', function (req, res) {
     return res.send(500, {message: err});
   });
 });
+
+//router.post('/api/unordered', function(req, res) {
+  //var userId = 1;
+//});
 
 router.get('/api/search', function(req, res) {
   booksSearch.search(req.query.query, req.query.page)

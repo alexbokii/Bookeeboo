@@ -54,6 +54,10 @@ app.use(function(err, req, res, next) {
     });
 });
 
-data.initTables();
+data.initTables().then(function(results) {
+  return data.fillWithTestData().then(function() {
+    console.log('DONE');
+  });
+});
 
 module.exports = app;
