@@ -1,44 +1,93 @@
 var express = require('express');
+var Promise = require('bluebird');
 var router = express.Router();
 var booksSearch = require('../lib/booksSearch');
+var queue = require('../data/queue');
+var book = require('../data/book');
+var user = require('../data/user');
+var unordered = require('../data/unordered');
 var _ = require('lodash');
 
 router.get('/', function(req, res) {
   res.render('index');
 });
 
-router.get('/api/queue', function(req, res) {
-  booksSearch.search('kittens', 1)
-  .then(function(results) {
-    res.send(results);
+router.delete('/api/books/delete-from-queue', function(req, res) {
+  //check that userId is for the user from the session and that book belongs to the user
+  book.get(req.body.bookId)
+  .then(function(books) {
+    var b = books[0];
+
+    if (b.userId !== req.body.userId) {
+      return res.send(403);
+    }
+
+    var updateQueue = queue.getQueue(b.userId).then(function(queueOrder) {
+      var newQueue = _(queueOrder.split(',')).without(b.id.toString()).value().join(',');
+      return queue.save(b.userId, newQueue);
+    });
+
+    return Promise.all([book.delete(b.id), updateQueue]);
   })
-  .error(function(err) {
-    return res.send(500, {message: err});
+  .then(function() {
+    res.send(200);
   });
 });
 
-//---unordered---
-router.get('/api/unordered', function(req, res) {
-  booksSearch.search('england', 1)
-  .then(function(results) {
-    res.send(results);
+router.delete('/api/books/delete-from-unordered', function(req, res) {
+  //check that userId is for the user from the session and that book belongs to the user
+  book.get(req.body.bookId)
+  .then(function(books) {
+    var b = books[0];
+
+    if (b.userId !== req.body.userId) {
+      return res.send(403);
+    }
+
+    var updateUnordered = unordered.getUnordered(b.userId).then(function(unorderedOrder) {
+      var newUnordered = _(unorderedOrder.split(',')).without(b.id.toString()).value().join(',');
+      return unordered.save(b.userId, newUnordered);
+    });
+
+    return Promise.all([book.delete(b.id), updateUnordered]);
   })
-  .error(function(err) {
-    return res.send(500, {message: err});
+  .then(function() {
+    res.send(200);
   });
 });
 
-//router.post('/api/unordered', function(req, res) {
-  //var userId = 1;
-//});
+router.get('/api/books/queue', function(req, res) {
+  queue.getBooks(1).then(function(results) {
+    return res.json(results);
+  });
+});
+
+router.get('/api/books/unordered', function(req, res) {
+  unordered.getBooks(1).then(function(results) {
+    return res.json(results);
+  });
+});
+
+router.post('/api/order/queue', function(req, res) {
+  //check that userId is for the user from the session
+  return queue.save(req.body.userId, req.body.queue.join(','))
+  .then(function() {
+    res.send(200);
+  });
+});
+
+router.post('/api/order/unordered', function(req, res) {
+  //check that userId is for the user from the session
+  return unordered.save(req.body.userId, req.body.unordered.join(','))
+  .then(function() {
+    res.send(200);
+  });
+});
 
 router.get('/api/search', function(req, res) {
   booksSearch.search(req.query.query, req.query.page)
   .then(function(results) {
     res.send(results);
-  })
-  .error(function(err) {
-    return res.send(500, {message: err});
   });
 });
 

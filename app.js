@@ -4,9 +4,13 @@ var favicon = require('static-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var data = require('./data');
-
+var Promise = require('bluebird');
+var knex = require('./data');
+var bootstrap = require('./data/bootstrap');
+var testData = require('./data/testData');
 var routes = require('./routes/index');
+
+global.knex = knex;
 
 var app = express();
 
@@ -54,9 +58,18 @@ app.use(function(err, req, res, next) {
     });
 });
 
-data.initTables().then(function(results) {
-  return data.fillWithTestData().then(function() {
-    console.log('DONE');
+bootstrap.createTablesIfMissing().then(function(result) {
+  if (result.length === 0) {
+    return;
+  }
+
+  return testData.createTestUser().then(function(results) {
+    var userId = results[0];
+
+    return Promise.all([
+      testData.createUnordered(userId),
+      testData.createQueue(userId)
+    ]);
   });
 });
 
