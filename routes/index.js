@@ -12,6 +12,28 @@ router.get('/', function(req, res) {
   res.render('index');
 });
 
+router.post('/api/books', function(req, res) {
+  req.body.book.userId = req.body.userId;
+
+  Promise.join(unordered.getUnordered(req.body.userId), book.save(req.body.book), function(unorderedOrder, bookId) {
+    var newUnordered = bookId + ',' + unorderedOrder;
+
+    return unordered.save(req.body.userId, newUnordered);
+  })
+  .then(function() {
+    res.send(200);
+  });
+});
+
+router.post('/api/books/page', function(req, res) {
+  book.get(req.body.bookId).then(function(b) {
+    return book.updateCurrentPage(req.body.bookId, req.body.page);
+  })
+  .then(function() {
+    res.send(200);
+  });
+});
+
 router.delete('/api/books/delete-from-queue', function(req, res) {
   //check that userId is for the user from the session and that book belongs to the user
   book.get(req.body.bookId)

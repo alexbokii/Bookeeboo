@@ -23,6 +23,7 @@ var definitions = {
     table.integer('pageCount');
     table.string('imageUrl');
     table.text('description');
+    table.integer('currentPage').notNullable().defaultTo(0);
   }
 };
 
