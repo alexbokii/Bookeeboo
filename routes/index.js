@@ -22,6 +22,9 @@ router.post('/api/books', function(req, res) {
   })
   .then(function() {
     res.send(200);
+  })
+  .catch(function(err) {
+    res.send(500, {error: err.message});
   });
 });
 
@@ -31,6 +34,9 @@ router.post('/api/books/page', function(req, res) {
   })
   .then(function() {
     res.send(200);
+  })
+  .catch(function(err) {
+    res.send(500, {error: err.message});
   });
 });
 
@@ -53,6 +59,9 @@ router.delete('/api/books/delete-from-queue', function(req, res) {
   })
   .then(function() {
     res.send(200);
+  })
+  .catch(function(err) {
+    res.send(500, {error: err.message});
   });
 });
 
@@ -75,18 +84,28 @@ router.delete('/api/books/delete-from-unordered', function(req, res) {
   })
   .then(function() {
     res.send(200);
+  })
+  .catch(function(err) {
+    res.send(500, {error: err.message});
   });
 });
 
 router.get('/api/books/queue', function(req, res) {
-  queue.getBooks(1).then(function(results) {
+  queue.getBooks(5)
+  .then(function(results) {
     return res.json(results);
+  })
+  .catch(function(err) {
+    res.send(500, {error: err.message});
   });
 });
 
 router.get('/api/books/unordered', function(req, res) {
   unordered.getBooks(1).then(function(results) {
     return res.json(results);
+  })
+  .catch(function(err) {
+    res.send(500, {error: err.message});
   });
 });
 
@@ -95,6 +114,9 @@ router.post('/api/order/queue', function(req, res) {
   return queue.save(req.body.userId, req.body.queue.join(','))
   .then(function() {
     res.send(200);
+  })
+  .catch(function(err) {
+    res.send(500, {error: err.message});
   });
 });
 
@@ -103,6 +125,9 @@ router.post('/api/order/unordered', function(req, res) {
   return unordered.save(req.body.userId, req.body.unordered.join(','))
   .then(function() {
     res.send(200);
+  })
+  .catch(function(err) {
+    res.send(500, {error: err.message});
   });
 });
 
@@ -110,6 +135,9 @@ router.get('/api/search', function(req, res) {
   booksSearch.search(req.query.query, req.query.page)
   .then(function(results) {
     res.send(results);
+  })
+  .catch(function(err) {
+    res.send(500, {error: err.message});
   });
 });
 
