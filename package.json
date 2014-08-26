@@ -21,8 +21,12 @@
     "string": "^1.9.1"
   },
   "devDependencies": {
+    "chai": "^1.9.1",
+    "chai-as-promised": "^4.1.1",
     "gulp": "^3.8.7",
     "gulp-sass": "^0.7.3",
-    "gulp-watch": "^0.6.9"
+    "gulp-watch": "^0.6.9",
+    "mocha": "^1.21.4",
+    "sinon": "^1.10.3"
   }
 }
