@@ -1,7 +1,379 @@
-.main {
-  background-color: red;
+$font-color: #E6E6E6;
+$font-pages: #F0B446;
+$bg-base: #171920;
+$bg-section: #262F38;
+@mixin autowidth {
+	width: intrinsic; //Safari, Webkit
+	width: -moz-max-content;
+	width: -webkit-max-content;
+}
 
-  span {
-    color: blue;
-  }
+::-webkit-input-placeholder {
+    color: #262F38;
+}
+::-moz-placeholder {
+	color: #262F38;  
+	opacity: 1;
+}
+:-moz-placeholder {
+	color: #262F38;  
+	opacity: 1;
+}
+:-ms-input-placeholder {  
+	color: #262F38;  
+}
+
+* {
+	padding: 0;
+	margin: 0;
+}
+
+body {
+	font-family: 'Roboto', sans-serif;
+	font-size: 16px;
+	color: $font-color;
+}
+
+a {
+	text-decoration: none;
+	color: $font-color;
+}
+
+.input-field {
+	width: 100%;
+	height: 2.5em;
+	box-sizing: border-box;
+	padding-left: 20px;
+	margin-top: 15px;
+	background-color: #C2C8CE;
+	border: 1px solid #4D6985;
+	border-radius: 5px;
+	color: #262F38;
+	outline: none;
+}
+
+.wrapper {
+	background-image: -webkit-linear-gradient(top, #52596C, #121124);
+}
+
+.container {
+	width: 1200px;
+	margin: 0 auto;
+}
+
+.opacity {
+	background-color: rgba(27, 23, 23, 0.5);
+	padding: 0 50px 30px 50px;
+}
+
+header {
+	overflow: hidden;
+	&.landing-header {
+		background: url(../images/background.jpg);
+	}
+	&.header-sm {
+		padding: 10px 30px;
+		background: $bg-base;
+	}
+	h1 {
+		color: $font-color;
+		text-transform: uppercase;
+		font-weight: 400;
+		font-style: italic;
+		&.landing {
+			font-size: 3.75em;
+		}
+		&.hd-reg {
+			font-size: 1.5em;
+			width: 50%;
+			float: left;
+		}
+	}
+	.sign-out {
+		width: 50%;
+		float: left;
+		color: $font-color;
+		text-align: right;
+		a {
+			font-weight: 300;
+			font-size: 1.1em;
+		}
+	}
+	p {
+		color: $font-color;
+		font-weight: 300;
+		font-size: 1.125em;
+		width: 30%;
+		line-height: 1.2em;
+		padding: 10px 0;
+	}
+	form {
+		width: 30%;
+		padding-top: 30px;
+		overflow: hidden;
+		h3 {
+			text-align: left;
+			border-bottom: 1px solid $font-color;
+			color: $font-color;
+			font-weight: 300;
+			line-height: 2em;
+		}
+		input {
+			&:last-of-type {
+				margin-top: 30px;
+			}
+		}
+		.buttons-container {
+			padding-top: 20px;
+			button {
+				width: 25%;
+				padding: 4px;
+				font-size: 0.7em;
+				&:first-of-type{
+					float: left;
+					background-color: #EA614F;
+					border: 2px solid #F2A095;
+
+				}
+				&:last-of-type {
+					float: right;
+					background-color: #28A363;
+					border: 2px solid #7ECBA1;
+				}
+			} // end of button
+		} // end of buttons-container
+	} // end of form
+} // end of header
+
+#scope {
+	background: url(../images/landing-books.png) no-repeat left center;
+	background-size: auto 100%;
+	background-origin: content-box;
+	overflow: hidden;
+	padding: 20px 50px 20px 50px;
+	background-color: $bg-section;
+	ul {
+		width: 30%;
+		float: right;
+		color: $font-color;
+		li {
+			font-size: 1em;
+			font-weight: 300;
+			line-height: 1.2em;
+			padding: 10px 0;
+			list-style: none;
+			padding-left: 30px;
+			background-size: 10px;
+			&:nth-child(1) {
+				background: url(../images/circle-red.png) no-repeat left center;
+				background-size: 12px;
+			}
+			&:nth-child(2) {
+				background: url(../images/circle-blue.png) no-repeat left center;
+				background-size: 12px;
+			}
+			&:nth-child(3) {
+				background: url(../images/circle-yellow.png) no-repeat left center;
+				background-size: 12px;
+			}
+			&:nth-child(4) {
+				background: url(../images/circle-green.png) no-repeat left center;
+				background-size: 12px;
+			}
+		} // end of li
+	} // end of ul
+} // end of scope
+
+.panel {
+	overflow: hidden;
+	background-color: $bg-section;
+	.search {
+		width: 100%;
+		padding: 10px 30px;
+		input {
+			height: 30px;
+			width: 1140px;
+		}
+	}
+	.current-reading {
+		overflow: hidden;
+		padding: 40px 0 40px 30px;
+		.cover {
+			width: 15%;
+			height: 350px;
+			float: left;
+			background: url(http://ecx.images-amazon.com/images/I/51WvdpFiJOL.jpg) no-repeat top center;
+			background-size: 100% auto;
+		}
+		.details {
+			width: 85%;
+			float: left;
+			padding-left: 30px;
+			font-weight: 300;
+			box-sizing: border-box;
+			.cur-header {
+				h3 {
+					font-size: 1.5em;
+					font-weight: 300;
+				}
+			}
+			p {
+				padding-top: 30px;
+			}
+		}
+	}
+}
+
+.mark {
+	poition: relative;
+	right: 0px;
+	width: 100px;
+	float: right;
+	padding: 4px 20px;
+	background-color: #DF5D45;
+	font-size: 0.875em;
+	font-weight: 300;
+	.unordered-books & {
+		width: 70px;
+		float: left;
+		left: 0;
+	}
+}
+
+//slider
+.graded {
+	color: #F0B446;
+	font-size: 0.875em;
+	padding-top: 30px;
+	.first-page {
+		width: 40px;
+		float: left;
+		text-align: center;
+	}
+	.last-page {
+		float: left;
+		text-align: center;
+		width: 58px;
+	}
+	.slider {
+		width: 850px;
+		height: 12px;
+		float: left;
+		border-radius: 5px;
+		background: #515960;
+		border: none !important;
+		position: relative;
+		.page-display {
+			position: absolute;
+			top: -25px;
+			width: 40px;
+			margin-left: -20px;
+			text-align: center;
+			color: #F0B446;
+		}
+	}
+	.ui-slider-handle {
+		background: url(../images/Handler.png) no-repeat !important;
+		position: absolute;
+		border: none !important;
+		width: 15px !important;
+		height: 30px !important;
+		outline: none;
+		top: 20px !important;
+	}
+}
+.pages-settings {
+	overflow: hidden;
+	width: 100%;
+	padding-top: 30px;
+	.minus {
+		width: 100px;
+		float: left;
+	}
+	.plus {
+		width: 100px;
+		float: right;
+	}
+	ul li {
+		width: 14px;
+		height: 14px;
+		display: inline-block;
+		margin: 0 2px;
+		border: 2px solid #7D8288;
+		list-style: none;
+		text-align: center;
+		color: #F0B446;
+		font-weight: 300;
+		font-size: 10px;
+	}
+	li.operator {
+		border: none;
+	}
+}
+
+.unordered-books {
+	overflow-x: scroll;
+	overflow-y: hidden; 
+	background-color: $bg-base;
+	ul {
+		@include autowidth;
+		height: 150px;
+		margin: 0 auto;
+		padding: 40px 70px;
+		white-space: nowrap;
+		li {
+			list-style: none;
+			display: inline;
+			height: 150px;
+			width: auto;
+			padding: 0 20px;
+			img {
+				height: 150px;
+				width: auto;
+			}
+		}
+	}
+}
+
+footer {
+	background-color: $bg-base;
+	padding: 20px 50px;
+	overflow: hidden;
+	color: $font-color;
+	
+    .ft-description {
+		float: left;
+		width: 50%;
+		text-align: left;
+		p {
+			width: 50%;
+			padding-top: 20px;
+			font-size: 0.75em;
+			font-weight: 300;
+			line-height: 1.1em;
+		}
+		&:first-of-type {
+			padding-top: 0;
+		}
+	}
+	.social {
+		float: right;
+		width: 50%;
+		text-align: right;
+		ul {
+			padding: 10px 0;
+			li {
+				display: inline;
+			}
+			h4 {
+				display: inline;
+				font-size: 0.8em;
+				font-weight: 300;
+			}
+		}
+		img {
+			width: 30px;
+			height: 30px;
+		}
+	}
 }

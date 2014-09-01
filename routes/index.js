@@ -12,6 +12,10 @@ router.get('/', function(req, res) {
   res.render('index');
 });
 
+router.get('/main', function(req, res) {
+  res.render('main');
+})
+
 router.post('/api/books', function(req, res) {
   req.body.book.userId = req.body.userId;
 
@@ -91,8 +95,7 @@ router.delete('/api/books/delete-from-unordered', function(req, res) {
 });
 
 router.get('/api/books/queue', function(req, res) {
-  queue.getBooks(5)
-  .then(function(results) {
+  queue.getBooks(1).then(function(results) {
     return res.json(results);
   })
   .catch(function(err) {
