@@ -1,7 +1,18 @@
 var book = {};
+var downloadImage = require('../lib/utils/downloadImage'),
+    _ = require('lodash');
 
 book.save = function(book) {
-  return knex('books').returning('id').insert(book);
+  var coverImageName = _.last(book.imageUrl.split('/'));
+  var localPath = 'public/images/covers/' + coverImageName;
+  var savePath = '/images/covers/' + coverImageName;
+
+  return downloadImage(book.imageUrl, localPath)
+  .then(function() {
+    book.imageUrl = savePath;
+
+    return knex('books').returning('id').insert(book);
+  });
 };
 
 book.updateCurrentPage = function(bookId, currentPage) {
