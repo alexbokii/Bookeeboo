@@ -51,6 +51,7 @@ router.post('/api/books/page', function(req, res) {
 });
 
 router.delete('/api/books/delete-from-queue', function(req, res) {
+  req.body.userId = 1;
   //check that userId is for the user from the session and that book belongs to the user
   book.get(req.body.bookId)
   .then(function(books) {
@@ -76,6 +77,7 @@ router.delete('/api/books/delete-from-queue', function(req, res) {
 });
 
 router.delete('/api/books/delete-from-unordered', function(req, res) {
+  req.body.userId = 1;
   //check that userId is for the user from the session and that book belongs to the user
   book.get(req.body.bookId)
   .then(function(books) {
