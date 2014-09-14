@@ -1,7 +1,13 @@
 $font-color: #E6E6E6;
 $font-pages: #F0B446;
-$bg-base: #171920;
+$bg-base: #171920; //footer, dark black
 $bg-section: #262F38;
+
+@mixin text ($size, $weight) {
+	font-size: $size;
+	font-weight: $weight;
+}
+
 @mixin autowidth {
 	width: intrinsic; //Safari, Webkit
 	width: -moz-max-content;
@@ -74,17 +80,20 @@ header {
 	&.header-sm {
 		padding: 10px 30px;
 		background: $bg-base;
+		a {
+			@include text(1.125em, 300);
+			line-height: 32px;
+		}
 	}
 	h1 {
 		color: $font-color;
 		text-transform: uppercase;
-		font-weight: 400;
 		font-style: italic;
 		&.landing {
-			font-size: 3.75em;
+			@include text(3.75em, 400);
 		}
 		&.hd-reg {
-			font-size: 1.5em;
+			@include text(1.5em, 400);
 			width: 50%;
 			float: left;
 		}
@@ -95,17 +104,15 @@ header {
 		color: $font-color;
 		text-align: right;
 		a {
-			font-weight: 300;
-			font-size: 1.1em;
+			@include text(1.1em, 300);
 		}
 	}
 	p {
 		color: $font-color;
-		font-weight: 300;
-		font-size: 1.125em;
 		width: 30%;
 		line-height: 1.2em;
 		padding: 10px 0;
+		@include text(1.125em, 300);
 	}
 	form {
 		width: 30%;
@@ -115,8 +122,8 @@ header {
 			text-align: left;
 			border-bottom: 1px solid $font-color;
 			color: $font-color;
-			font-weight: 300;
 			line-height: 2em;
+			@include text(1.125em, 300);
 		}
 		input {
 			&:last-of-type {
@@ -128,7 +135,7 @@ header {
 			button {
 				width: 25%;
 				padding: 4px;
-				font-size: 0.7em;
+				@include text(0.7em, 300);
 				&:first-of-type{
 					float: left;
 					background-color: #EA614F;
@@ -157,13 +164,12 @@ header {
 		float: right;
 		color: $font-color;
 		li {
-			font-size: 1em;
-			font-weight: 300;
 			line-height: 1.2em;
 			padding: 10px 0;
 			list-style: none;
 			padding-left: 30px;
 			background-size: 10px;
+			@include text(1em, 300);
 			&:nth-child(1) {
 				background: url(../images/circle-red.png) no-repeat left center;
 				background-size: 12px;
@@ -191,16 +197,23 @@ header {
 		width: 100%;
 		padding: 10px 30px;
 		input {
-			height: 30px;
+			height: 40px;
 			width: 1140px;
+			border: 2px solid #4D6985;
+			padding-left: 35px;
+			background-image: url(../images/icon-looking.png);
+			background-repeat: no-repeat;
+			background-position: 10px center;
+			background-size: 20px 20px;
+			@include text(0.8em, 300);
 		}
 	}
 	.current-reading {
 		overflow: hidden;
-		padding: 40px 0 40px 30px;
+		padding: 40px 0 0 30px;
 		.cover {
 			width: 15%;
-			height: 350px;
+			height: 300px;
 			float: left;
 			background: url(http://ecx.images-amazon.com/images/I/51WvdpFiJOL.jpg) no-repeat top center;
 			background-size: 100% auto;
@@ -212,9 +225,16 @@ header {
 			font-weight: 300;
 			box-sizing: border-box;
 			.cur-header {
+				position: relative;
 				h3 {
-					font-size: 1.5em;
-					font-weight: 300;
+					float: left;
+					@include text(1.5em, 300);
+				}
+				.num-of-pages {
+					position: absolute;
+					bottom: 2px;
+					margin-left: 20px;
+					@include text(0.875em, 300);
 				}
 			}
 			p {
@@ -224,15 +244,70 @@ header {
 	}
 }
 
+.hidden-panel {
+	position: absolute;
+	z-index: 500;
+	width: 1200px;
+	max-height: 100%;
+	overflow: auto;
+	background: rgba(81, 89, 96, 0.95);
+	li {
+		display: block;
+		overflow: hidden;
+		padding: 30px 30px 0 30px;
+	}
+	.book-cover {
+		display: block;
+		width: 130px;
+		height: 180px;
+		float: left;
+		background-size: 100% 100%;
+		background-repeat: no-repeat;
+	}
+	.book-description {
+		overflow: hidden;
+		width: 1000px;
+		float: left;
+		box-sizing: border-box;
+		padding-left: 30px;
+		h2 {
+			@include text(1.5em, 300);
+		}
+		p {
+			@include text(1.125rem, 300);
+			padding-top: 20px;
+			line-height: 1.4em;
+		}
+	}
+	button {
+		width: 80px;
+		float: right;
+		border: 2px solid #7D8288;
+		margin-top: 20px;
+		padding: 3px 0;
+		background: none;
+		@include text(0.75em, 300);
+		font-family: inherit;
+		color: #fff;
+	}
+	.separate-line {
+		width: 1150px;
+		height: 2px;
+		margin: 0 auto;
+		margin-top: 30px;
+		background-color: #3D4348;
+		// margin: 20px 0;
+	}
+}
+
 .mark {
-	poition: relative;
+	position: relative;
 	right: 0px;
 	width: 100px;
 	float: right;
 	padding: 4px 20px;
 	background-color: #DF5D45;
-	font-size: 0.875em;
-	font-weight: 300;
+	@include text(0.875em, 300);
 	.unordered-books & {
 		width: 70px;
 		float: left;
@@ -243,8 +318,8 @@ header {
 //slider
 .graded {
 	color: #F0B446;
-	font-size: 0.875em;
-	padding-top: 30px;
+	padding-top: 40px;
+	@include text(0.875em, 300);
 	.first-page {
 		width: 40px;
 		float: left;
@@ -261,9 +336,9 @@ header {
 		float: left;
 		border-radius: 5px;
 		background: #515960;
-		border: none !important;
+		border: none;
 		position: relative;
-		.page-display {
+		.page-counter {
 			position: absolute;
 			top: -25px;
 			width: 40px;
@@ -273,19 +348,18 @@ header {
 		}
 	}
 	.ui-slider-handle {
-		background: url(../images/Handler.png) no-repeat !important;
+		background: url(../images/Handler.png) no-repeat;
 		position: absolute;
-		border: none !important;
-		width: 15px !important;
-		height: 30px !important;
+		border: none;
+		width: 15px;
+		height: 30px;
 		outline: none;
-		top: 20px !important;
+		top: 20px;
 	}
 }
 .pages-settings {
 	overflow: hidden;
-	width: 100%;
-	padding-top: 30px;
+	padding: 40px 30px 0 0;
 	.minus {
 		width: 100px;
 		float: left;
@@ -303,18 +377,59 @@ header {
 		list-style: none;
 		text-align: center;
 		color: #F0B446;
-		font-weight: 300;
-		font-size: 10px;
+		@include text(0.625em, 300);
 	}
 	li.operator {
 		border: none;
+		font-size: 0.8em;
 	}
 }
 
-.unordered-books {
-	overflow-x: scroll;
-	overflow-y: hidden; 
-	background-color: $bg-base;
+.unordered-books { 
+	background-color: $bg-section;
+	position: relative;
+	.unordered-line {
+		width: 100%;
+		height: 2px;
+		background-color: $bg-base;
+		border-bottom: 1px solid #747579;
+	}
+	.page-keeper {
+		width: 100px;
+		margin: 0 auto;
+		background-color: $bg-section;
+		text-align: center;	
+		color: #F0B446;
+		-webkit-transform: translate(0%, 50%);
+		@include text(1.5em, 300);
+	}
+	&.hidden-height {
+		height: 65px;
+	}
+	button {
+		position: absolute;
+		left: 575px;
+		z-index: 100;
+		width: 50px;
+		height: 20px; 
+		border: 1px solid #171920;
+		background-repeat: no-repeat;
+		background-position: center center; 
+		background-size: 10px 10px;
+		outline: none;
+		cursor: pointer;
+	}
+		.up {
+			background-image: url(../images/icon-unordered-up.png);
+			top: -10px;
+		}
+		.bottom {
+			background-image: url(../images/icon-unordered-bottom.png);
+			bottom: -10px;
+		}
+	.unordered-wrapper {
+		background-color: $bg-base;
+	}
 	ul {
 		@include autowidth;
 		height: 150px;
@@ -323,16 +438,72 @@ header {
 		white-space: nowrap;
 		li {
 			list-style: none;
-			display: inline;
+			display: inline-block;
 			height: 150px;
 			width: auto;
 			padding: 0 20px;
 			img {
 				height: 150px;
 				width: auto;
+				max-width: 145px;
 			}
+		} // end of ul
+	} // end of unordered-wrapper
+} // end of unordered-books
+
+.ordered-books {
+	padding: 50px;
+	overflow: hidden;
+	background-color: $bg-section;
+	li {
+		position: relative;
+		display: block;
+		width: 150px;
+		float: left;
+		margin: 10px 35px;
+		height: 250px;
+		overflow: hidden;
+		padding-top: 10px;
+		text-align: center;
+		background-color: #515960;
+		h5 {
+			box-sizing: border-box;
+			overflow: hidden; 
+			color: #fff;
+			margin: 5px 10px 10px 10px;
+			@include text(0.875em, 300);
+		}
+		.index {
+			position: absolute;
+			width: 100%;
+			bottom: 0;
+			height: 20px;
+			padding: 2px 0;
+			@include text(0.875em, 300);
+		}
+		img {
+			width: 130px;
+			height: auto;
 		}
 	}
+}
+
+.start-sorting {
+	background-color: #8093A5;
+	-webkit-transition: all 0.2s ease-out;
+}
+
+.sortable-placeholder {
+	border: 1px dashed #666;
+	box-sizing: border-box;
+}
+
+div.colorWh {
+	color: #fff;
+}
+
+div.colorBl {
+	color: #000;
 }
 
 footer {
@@ -348,9 +519,8 @@ footer {
 		p {
 			width: 50%;
 			padding-top: 20px;
-			font-size: 0.75em;
-			font-weight: 300;
 			line-height: 1.1em;
+			@include text(0.75em, 300);
 		}
 		&:first-of-type {
 			padding-top: 0;
@@ -358,17 +528,22 @@ footer {
 	}
 	.social {
 		float: right;
-		width: 50%;
+		width: 180px;
 		text-align: right;
 		ul {
 			padding: 10px 0;
+			overflow: hidden;
 			li {
-				display: inline;
+				display: block;
+				float: left;
+				width: auto;
+				height: 30px;
+				padding: 0 5px;
 			}
 			h4 {
 				display: inline;
-				font-size: 0.8em;
 				font-weight: 300;
+				@include text(0.8em, 300);
 			}
 		}
 		img {

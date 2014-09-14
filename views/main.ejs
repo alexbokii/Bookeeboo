@@ -9,7 +9,9 @@
     <script src="../javascripts/thirdparty/jquery-1.11.1.min.js"></script>
     <script src="../javascripts/thirdparty/jquery-ui/external/jquery/jquery.js"></script>
     <script src="../javascripts/thirdparty/jquery-ui/jquery-ui.min.js"></script>
+    <script src="../javascripts/thirdparty/color-thief-master/src/color-thief.js"></script>
     <script src="../javascripts/main.js"></script>
+    <script src="../javascripts/lists.js"></script>
     
   </head>
   <body>
@@ -25,12 +27,17 @@
   					<input type="text" placeholder="Search a book you want to add to our queue" class="input-field">
   				</div>
 
+          <div class="hidden-panel">
+            <ul></ul>
+          </div>
+
   				<div class="current-reading">
   					<div class="cover"></div>
   					<div class="details">
   					 <div class="mark">You are reading</div>
   					 <header class="cur-header">
   							<h3>Nice Book about kitten</h3>
+                <span class="num-of-pages">322 pages</span>
   					 </header>
   					 <p>This book is written for cat-lovers. It's about cute and funny citten who escaped from his family. You'll see adventures of clever people who had sold their home to pay for detective who spent all money for one-way ticket to Australia.
              </p>
@@ -39,23 +46,23 @@
               <div class="graded">
                 <div class="first-page">1</div>
                 <div class="slider">
-                 <div class="page-display"></div>   
+                 <div class="page-counter"></div>   
                 </div>
               <div class="last-page"></div>
             </div>
               
             <div class="pages-settings">
               <ul class="minus">
-                <li class="amount">1</li>
-                <li class="amount">5</li>
-                <li class="amount">10</li>
+                <li class="number">1</li>
+                <li class="number">5</li>
+                <li class="number">10</li>
                 <li class="operator">&#8211;</li>
               </ul>
               <ul class="plus">
                 <li class="operator">+</li>
-                <li class="amount">1</li>
-                <li class="amount">5</li>
-              <li class="amount">10</li>
+                <li class="number">1</li>
+                <li class="number">5</li>
+              <li class="number">10</li>
               </ul>
             </div>
           </div>
@@ -63,22 +70,44 @@
   			</section>
 
   			<section class="unordered-books">
-  				<div class="mark">Unordered</div>
-  				<ul>
+          <button class="up"></button>
+          <div class='page-keeper'>64</div>
+          <div class='unordered-line'></div>
+            <div class="unordered-wrapper">
+  				    <div class="mark">Unordered</div>
+  				    <ul>
 
-  				</ul>
+  				    </ul>
+            </div>
+          <button class="bottom"></button>
   			</section>
 
   			<section class="ordered-books">
   				<ul>
-  					<li></li>
-  					<li></li>
-  					<li></li>
-  					<li></li>
-  					<li></li>
-  					<li></li>
+  					
   				</ul>
   			</section>
+
+        <footer>
+          <div class="ft-description">
+            <p>This website is created as an example by Alex Bokii and Ivan Bokii with a purpose to help Alex find her first job as a front-end developer.</p>
+            <p>If you are looking for someone to fulfill a position in your company, please, contact us.</p>
+          </div>
+          <div class="social">
+            <ul>
+              <li><h4>alexbokii</h4></li>
+              <li><a href="#"><img src="../images/icon-twitter.png"></a></li>
+              <li><a href="#"><img src="../images/icon-github.png"></a></li>
+              <li><a href="#"><img src="../images/icon-mail.png"></a></li>
+            </ul>
+            <ul>
+              <li><h4>ivanbokii</h4></li>
+              <li><a href="#"><img src="../images/icon-twitter.png"></a></li>
+              <li><a href="#"><img src="../images/icon-github.png"></a></li>
+              <li><a href="#"><img src="../images/icon-mail.png"></a></li>
+            </ul>
+          </div>
+        </footer> 
   		</div>
   	</div>
   </body>
