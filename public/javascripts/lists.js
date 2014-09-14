@@ -2,7 +2,7 @@ $(document).ready(function() {
   $.post('/api/test/super', {name: 'Alex', lastName: 'Bokii'});
 
   //1. Ajax for unordered list
-  $.ajax('/api/books/unordered', {
+  $.ajax('/api/books/unordered',  {
     success: function(response) {
       response.forEach (function (book, index) {
         $(".unordered-books ul").append("<li><img src='" + book.imageUrl + "'></li>");
