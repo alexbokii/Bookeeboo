@@ -193,8 +193,9 @@ header {
 .panel {
 	overflow: hidden;
 	background-color: $bg-section;
+	padding-bottom: 30px;
 	.search {
-		width: 100%;
+		position: relative;
 		padding: 10px 30px;
 		input {
 			height: 40px;
@@ -207,16 +208,30 @@ header {
 			background-size: 20px 20px;
 			@include text(0.8em, 300);
 		}
+		button#search-delete { 
+			width: 40px;
+			height: 40px;
+			position: absolute;
+			right: 30px;
+			top: 23px;
+			border: none;
+			background: none;
+			color: #DF5D45;
+			cursor: pointer;
+			outline: none;
+			@include text(1.8em, 300);
+		}
 	}
 	.current-reading {
 		overflow: hidden;
 		padding: 40px 0 0 30px;
 		.cover {
-			width: 15%;
-			height: 300px;
+			width: 175px;
+			height: 270px;
 			float: left;
-			background: url(http://ecx.images-amazon.com/images/I/51WvdpFiJOL.jpg) no-repeat top center;
-			background-size: 100% auto;
+			background-size: 100% 100% !important;
+			background-repeat: no-repeat;
+			background-position: top center;
 		}
 		.details {
 			width: 85%;
@@ -238,7 +253,8 @@ header {
 				}
 			}
 			p {
-				padding-top: 30px;
+				padding: 30px 30px 0 0;
+				text-align: justify;
 			}
 		}
 	}
@@ -289,6 +305,7 @@ header {
 		@include text(0.75em, 300);
 		font-family: inherit;
 		color: #fff;
+		outline: none;
 	}
 	.separate-line {
 		width: 1150px;
@@ -358,6 +375,8 @@ header {
 	}
 }
 .pages-settings {
+	width: 100%;
+	box-sizing: border-box;
 	overflow: hidden;
 	padding: 40px 30px 0 0;
 	.minus {
@@ -437,6 +456,7 @@ header {
 		padding: 40px 70px;
 		white-space: nowrap;
 		li {
+			position: relative;
 			list-style: none;
 			display: inline-block;
 			height: 150px;
@@ -488,24 +508,6 @@ header {
 	}
 }
 
-.start-sorting {
-	background-color: #8093A5;
-	-webkit-transition: all 0.2s ease-out;
-}
-
-.sortable-placeholder {
-	border: 1px dashed #666;
-	box-sizing: border-box;
-}
-
-div.colorWh {
-	color: #fff;
-}
-
-div.colorBl {
-	color: #000;
-}
-
 footer {
 	background-color: $bg-base;
 	padding: 20px 50px;
@@ -542,7 +544,7 @@ footer {
 			}
 			h4 {
 				display: inline;
-				font-weight: 300;
+				line-height: 30px;
 				@include text(0.8em, 300);
 			}
 		}
@@ -551,4 +553,45 @@ footer {
 			height: 30px;
 		}
 	}
+}
+
+// Dynamic selectors 
+.input-focus {
+	background: rgba(81, 89, 96, 0.95);
+	width: 100%;
+	height: 500px;
+}
+
+div.colorWh {
+	color: #fff;
+}
+
+div.colorBl {
+	color: #000;
+}
+
+.start-sorting {
+	background-color: #8093A5;
+	-webkit-transition: all 0.2s ease-out;
+}
+
+.sortable-placeholder {
+	border: 1px dashed #666;
+	box-sizing: border-box;
+}
+
+.sorting-delete {
+	position: absolute;
+	z-index: 1000;
+	top: 0;
+	right: 0;
+	width: 30px;
+	height: 30px;
+	text-align: center;
+	background-color: rgba(192, 61, 69, 0.7);
+	@include text(1.5em, 300);
+}
+
+.add-book {
+	outline: none;
 }
