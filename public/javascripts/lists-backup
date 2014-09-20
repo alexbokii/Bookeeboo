@@ -5,17 +5,25 @@ $(document).ready(function() {
   var currentSearch;
   var currentBook;
 
-  //1. Prepare DOM
+  function findOrderedIds() {
+    orderedIds = [];
+      $(".ordered-books li").each(function() {
+        var value = $(this).find('input').val();
+        orderedIds.push(parseInt(value));
+      });
+  }
+
+  //0. Prepare DOM
   $('#search-delete').hide();
 
-  //2.Receive unordered list from server
-  // We sent request, receive list, send it to local array and create list in DOM
+  //1. Ajax for unordered list
+  // We receive array with unordered books here
   $.ajax('/api/books/unordered',  {
     success: function(response) {
       response.forEach (function (book, index) {
         unorderedBooks.push(book);
+        createUnorderedBook(book);
       });
-      createUnorderedBooksInDom(unorderedBooks);
       console.log(unorderedBooks);
     },
     error: function(request, errorType, errorMessage) {
@@ -23,44 +31,44 @@ $(document).ready(function() {
     }
   });
 
-  function createUnorderedBooksInDom(unorderedBooks) {
-    $('.unordered-books ul').empty();
-    for(var i = 0; i < unorderedBooks.length; i++) {
-      $(".unordered-books ul").prepend("<li>"
-        +"<input type='hidden' value='" + unorderedBooks[i].id + "' />"
-        +"<img src='" + unorderedBooks[i].imageUrl + "'>"
-        +"</li>");
-    } 
+  function createUnorderedBook(item) {
+    $(".unordered-books ul").prepend("<li>"
+          +"<input type='hidden' value='" + item.id + "' />"
+          +"<img src='" + item.imageUrl + "'>"
+          +"</li>");
   }
 
-  //3. Ordered list
-  // We receive array with ordered books from server
+  //2. Ordered list
+  // We receive array with ordered books here
   $.ajax('/api/books/queue', {
     success: function(response) {
       response.forEach (function (book, index) {
         orderedBooks.push(book);
       })
-      createOrderedBooksInDom(orderedBooks);
+      WriteOrderedLIstInHtml(orderedBooks);
+      setTimeout(function() {
+        setNewBackground();
+      }, 300);
     },
     error: function(request, errorType, errorMessage) {
       console.log("Error: " + errorType + " with message: " + errorMessage);
     }
   });
 
-  function createOrderedBooksInDom(array) {
+  function WriteOrderedLIstInHtml(array) {
     var index = 0;
     for (var i = 0; i < array.length; i++) {
       $(".ordered-books ul").append("<li>"
-        + "<input type='hidden' value='" + array[i].id + "' />"
-        + "<img src='" + array[i].imageUrl + "'/>"
-        + "<h5>" + array[i].title + "</h5>"
-        + "<div class='index'>" + (index+1) + "</div>"
-        + "</li>");
+          + "<input type='hidden' value='" + array[i].id + "' />"
+          + "<img src='" + array[i].imageUrl + "'/>"
+          + "<h5>" + array[i].title + "</h5>"
+          + "<div class='index'>" + (index+1) + "</div>"
+          + "</li>");
       index++;
     }
     setNewCurrentBook(); // set current book
     setTimeout(function() {
-        setNewBackground(); //color chief for index
+        setNewBackground();
       }, 300);
   }
 
@@ -77,21 +85,15 @@ $(document).ready(function() {
     setNewSliderForNewCurrentBook(currentBook); 
   }
 
-  //4. Page count, slider for current book
+  //4. Page count, slider for current page
   // Settings for slider and for change-number buttons 
   function setNewSliderForNewCurrentBook(currentBook) {
     updateSliderInfo({max: currentBook.pageCount, val: currentBook.currentPage});
 
     var position = currentBook.currentPage / (currentBook.pageCount / 100);
     $(".page-counter").css({"left": ""+ position + "%"});
+    $(".page-counter").html(currentBook.currentPage);
     $(".ui-slider-handle").css({"left": ""+ position + "%"});
-
-    if (currentBook.currentPage > 0) {
-      $(".page-counter").html(currentBook.currentPage);
-    }
-    else {
-      $(".page-counter").html("");
-    }
   }
 
   $( ".slider" ).slider({
@@ -205,31 +207,15 @@ $(document).ready(function() {
     },
     stop: function( event, ui ) {
       $(".ordered-books").removeClass("start-sorting");
-      findOrderedIds(); //new id's order
-      changeIndexesAfterChangingOrder(); //indexes in html
-      setNewOrderOfOrderedBooks(orderedIds); //chande local orderedbooks array depends on new id's order
-      sendOrderOfOrderedToServer(orderedIds); //post our new local array to server
-      setNewCurrentBook(); //if 1-st book is changed, it'll be changed in DOM
+      findOrderedIds();
+      changeIndexesAfterChangingOrder();
+      setNewOrderOfOrderedBooks(orderedIds);
+      sendOrderOfOrderedToServer(orderedIds);
+      setNewCurrentBook();
     }
   });
 
-  function findOrderedIds() {
-    orderedIds = [];
-      $(".ordered-books li").each(function() {
-        var value = $(this).find('input').val();
-        orderedIds.push(parseInt(value));
-      });
-    return orderedIds;
-  }
-
-  function changeIndexesAfterChangingOrder() {
-    var index = 1;
-    $('.ordered-books li').each(function() {
-      $(this).find('.index').html(index);
-      index++;
-    });
-  }
-
+  //8. Change order of ordered-books in our array and on server
   function setNewOrderOfOrderedBooks(orderedIds) {
     var newOrderedBooks = [];
     for(i = 0; i < orderedIds.length; i++) {
@@ -240,6 +226,14 @@ $(document).ready(function() {
       }
     }
     orderedBooks = newOrderedBooks;
+  }
+
+  function changeIndexesAfterChangingOrder() {
+    var index = 1;
+    $('.ordered-books li').each(function() {
+      $(this).find('.index').html(index);
+      index++;
+    });
   }
 
   function sendOrderOfOrderedToServer(orderedIds) {
@@ -257,60 +251,33 @@ $(document).ready(function() {
     }
   }, "li");
 
-
-
-  // ----------------------------------------------------------------------------------------------
-
-
-
   //10. Delete book from ordered books list
   //On press button delete our book should be deleted from DOM, server and local array.
   //Other books should change their order
   $('.ordered-books').on('click', '.sorting-delete', function() {
     var deletingId = $(this).closest('li').find('input').val();
     deletingId = parseInt(deletingId);
-    $(this).parent('li').remove();
 
-    saveDeletingInDom();
-    deletingFromArray(deletingId, orderedBooks); 
+    deleteBookFromOrderedBooksAndHtml(deletingId);
+    deleteOrderedBookFromServer(deletingId); 
   });
 
-  function saveDeletingInDom() {
-    var newOrderArray = findOrderedIds(); //because we need to have new order to build new html
-    console.log(newOrderArray, newOrderArray.length);
-    setNewOrderOfOrderedBooks(newOrderArray);
+  function deleteBookFromOrderedBooksAndHtml(deletingId) {
+    findOrderedIds(); //because we need to have new order to build new html
+    for(var i = 0; i < orderedIds.length; i++) {
+      if(deletingId === orderedIds[i]) {
+        for(var j = 0; j < orderedBooks.length; j++) {
+          if(orderedBooks[j].hasOwnProperty("id") &&
+            orderedBooks[j]["id"] === deletingId) {
+            var deletingBook = j;
+          }
+        }
+      } // end of 1-st if
+    } // end of main for
+    orderedBooks.splice(deletingBook, 1); // delete book object from our local array
     $('.ordered-books li').remove(); // to build new html from beginning, not to add
-    createOrderedBooksInDom(orderedBooks);
-
+    WriteOrderedLIstInHtml(orderedBooks);
   }
-
-  function deletingFromArray(id, typeOfList) {
-    console.log(orderedBooks);
-    for(var i = 0; i < typeOfList.length; i++) {
-      if(typeOfList[i]["id"] === id) {
-        var deletingBook = typeOfList[i];
-      }
-    }
-    typeOfList.splice(deletingBook, 1); // delete book object from our local array 
-    console.log(orderedBooks);
-  }
-
-  // function deleteBookFromOrderedBooksAndHtml(deletingId) {
-  //   // findOrderedIds(); //because we need to have new order to build new html
-  //   for(var i = 0; i < orderedIds.length; i++) {
-  //     if(deletingId === orderedIds[i]) {
-  //       for(var j = 0; j < orderedBooks.length; j++) {
-  //         if(orderedBooks[j].hasOwnProperty("id") &&
-  //           orderedBooks[j]["id"] === deletingId) {
-  //           var deletingBook = j;
-  //         }
-  //       }
-  //     } // end of 1-st if
-  //   } // end of main for
-  //   orderedBooks.splice(deletingBook, 1); // delete book object from our local array
-  //   $('.ordered-books li').remove(); // to build new html from beginning, not to add
-  //   // createOrderedBooksInDom(orderedBooks);
-  // }
 
   function deleteOrderedBookFromServer(index) {
     $.post('/api/books/delete-from-queue', {bookId: index});
@@ -341,13 +308,6 @@ $(document).ready(function() {
   function deleteUnorderedBookFromServer(index) {
     $.post('/api/books/delete-from-unordered', {bookId: index});
   }
-
-
-  
-
-
-//-----------------------------------------------------------------------------------------------------
-
 
   //12. Search and add new book
   //12.1. Work with focus state in DOM
@@ -421,9 +381,7 @@ $(document).ready(function() {
     for(var i = 0; i < currentSearch.length; i++) {
       if(valueOfChoosen == currentSearch[i].title) {
         console.log(currentSearch[i]);
-        unorderedBooks.push(currentSearch[i]);
-        console.log(unorderedBooks);
-        createUnorderedBooksInDom(unorderedBooks);
+        createUnorderedBook(currentSearch[i]);
         $.post('/api/books', {book: currentSearch[i]});
       }
     }
