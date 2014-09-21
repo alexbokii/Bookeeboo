@@ -3,7 +3,7 @@ var downloadImage = require('../lib/utils/downloadImage'),
     _ = require('lodash');
 
 book.save = function(book) {
-  var coverImageName = _.last(book.imageUrl.split('/'));
+  var coverImageName = _.last(book.imageUrl.split('/')).replace('%', '');
   var localPath = 'public/images/covers/' + coverImageName;
   var savePath = '/images/covers/' + coverImageName;
 
