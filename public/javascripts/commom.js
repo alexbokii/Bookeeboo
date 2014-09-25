@@ -16,6 +16,9 @@ window.common = {
       index++;
     } // end of for
     return htlmList;
+  },
+  deleteUnorderedBookFromServer: function(index) {
+    $.post('/api/books/delete-from-unordered', {bookId: index});
   }
 }
 

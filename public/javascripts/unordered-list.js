@@ -34,26 +34,6 @@ $(document).ready(function() {
     $(".unordered-books ul li h5, .unordered-books ul li .index").hide();
   }
 
-  // Sortable
-  // $('.unordered-books ul').sortable({connectWith: '.ordered-books ul li'});
-  // $( ".unordered-books ul" ).sortable({
-  //     connectWith: ".connectedSortable"
-  //   }).disableSelection();
-
-  $(".unordered-books ul").sortable({ connectWith: ".connectedSortable", cursor: "move", revert: 200, tolerance: "pointer", placeholder: "sortable-placeholder",
-    start: function( event, ui ) {
-      $(".ordered-books").addClass("start-sorting");
-    },
-    stop: function( event, ui ) {
-      $(".ordered-books").removeClass("start-sorting");
-      findOrderedIds(); //new id's order
-      console.log(orderedIds);
-      sendOrderOfOrderedToServer(orderedIds); //post our new local array to server
-      getQueue(); //new request for queue
-    }
-  });
-
-
   //Create delete button
   $(".unordered-books").on({
     mouseenter: function() {
@@ -68,16 +48,13 @@ $(document).ready(function() {
   $('.unordered-books').on('click', '.sorting-delete', function() {
     var el = $(this).closest('li');
     var id = el.find('input').val();
-    console.log(id, el);
-    deleteFromUnorderedOnServer(id);
-  });
+    
+    window.common.deleteUnorderedBookFromServer(id);
 
-  function deleteFromUnorderedOnServer(index) {
-    $.post('/api/books/delete-from-unordered', {bookId: index});
     setTimeout(function() {
       getUnorderedList(); // setTimeOut because of parallel functions
     }, 100);
-  }
+  });
 
   // Search
   var timerID;
@@ -126,7 +103,6 @@ $(document).ready(function() {
     });
   }
 
-  //3.3. Add new book from search to unordered list 
   $('.panel').on('click', '.add-book', function() {
     if ($(".unordered-books li").length >= 5) {
       unsuccessfulAddingOfBook();

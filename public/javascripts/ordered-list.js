@@ -18,7 +18,6 @@ $(document).ready(function() {
 
   getQueue();
 
-
   function rewriteOrederOfOrderedBooks(list) {
     $(".ordered-books ul").empty();
     $(".ordered-books ul").append(list);
@@ -59,25 +58,25 @@ $(document).ready(function() {
     },
     stop: function( event, ui ) {
       $(".ordered-books").removeClass("start-sorting");
-      findOrderedIds(); //new id's order
-      console.log(orderedIds);
-      sendOrderOfOrderedToServer(orderedIds); //post our new local array to server
-      getQueue(); //new request for queue
+      updateOrderedBooksOnServer();
     }
   });
 
-  $(".unordered-books ul").sortable({ connectWith: ".connectedSortable", cursor: "move", revert: 200, tolerance: "pointer",
-    start: function( event, ui ) {
-      $(".ordered-books").addClass("start-sorting");
-    },
-    stop: function( event, ui ) {
-      $(".ordered-books").removeClass("start-sorting");
-      findOrderedIds(); //new id's order
-      console.log(orderedIds);
-      sendOrderOfOrderedToServer(orderedIds); //post our new local array to server
-      getQueue(); //new request for queue
-    }
-  });
+  $( ".unordered-books ul" ).sortable({
+      connectWith: ".connectedSortable",
+      stop: function(event, ui) {
+        var id = $(ui.item).find('input').val();
+        window.common.deleteUnorderedBookFromServer(id);
+        updateOrderedBooksOnServer();
+      }
+    }).disableSelection();
+
+  function updateOrderedBooksOnServer() {
+    findOrderedIds(); //new id's order
+    console.log(orderedIds);
+    sendOrderOfOrderedToServer(orderedIds); //post our new local array to server
+    getQueue(); //new request for queue
+  }
 
   function findOrderedIds() {
     orderedIds = [];
