@@ -10,10 +10,18 @@
     <script src="../javascripts/thirdparty/jquery-ui/external/jquery/jquery.js"></script>
     <script src="../javascripts/thirdparty/jquery-ui/jquery-ui.min.js"></script>
     <script src="../javascripts/thirdparty/color-thief-master/src/color-thief.js"></script>
+    <script src="../javascripts/namespace.js"></script>
     <script src="../javascripts/main.js"></script>
     <script src="../javascripts/common.js"></script>
     <script src="../javascripts/ordered-list.js"></script>
     <script src="../javascripts/unordered-list.js"></script>
+
+    <script>
+      $(function() {
+        bookeeboo.orderedBooks.init();
+        bookeeboo.unorderedBooks.init();
+      });
+    </script>
     
   </head>
   <body>
@@ -40,7 +48,7 @@
   					 <div class="mark">You are reading</div>
   					 <header class="cur-header">
   							<h3>Nice Book about kitten</h3>
-                <span class="num-of-pages">322 pages</span>
+                <span class="num-of-pages"></span>
   					 </header>
   					 <p>This book is written for cat-lovers. It's about cute and funny citten who escaped from his family. You'll see adventures of clever people who had sold their home to pay for detective who spent all money for one-way ticket to Australia.
              </p>

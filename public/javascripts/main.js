@@ -33,4 +33,10 @@ $(document).ready(function() {
     });
   } 
   
+  //3. Scroll for search
+  $(".hidden-panel").scroll(function() {
+    if($("hidden-panel").scrollTop() == $("hidden-panel").height() - $("hidden-panel").height()) {
+      console.log("I am at the bottom");
+    }
+  });
 }); // end of ready
