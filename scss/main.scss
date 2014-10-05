@@ -34,9 +34,14 @@ $bg-section: #262F38;
 	margin: 0;
 }
 
+html {
+	height: 100%;
+}
+
 body {
+	height: 100%;
 	font-family: 'Roboto', sans-serif;
-	font-size: 16px;
+	font-size: 14px;
 	color: $font-color;
 }
 
@@ -59,6 +64,7 @@ a {
 }
 
 .wrapper {
+	min-height: 100%;
 	background-image: -webkit-linear-gradient(top, #52596C, #121124);
 }
 
@@ -244,12 +250,11 @@ header {
 				h3 {
 					float: left;
 					@include text(1.5em, 300);
-				}
-				.num-of-pages {
-					position: absolute;
-					bottom: 2px;
-					margin-left: 20px;
-					@include text(0.875em, 300);
+					span {
+						bottom: 2px;
+						margin-left: 20px;
+						@include text(0.675em, 300);
+					}
 				}
 			}
 			p {
@@ -290,7 +295,7 @@ header {
 			@include text(1.5em, 300);
 		}
 		p {
-			@include text(1.125rem, 300);
+			@include text(1em, 300);
 			padding-top: 20px;
 			line-height: 1.4em;
 		}
@@ -349,7 +354,7 @@ header {
 	}
 	.slider {
 		width: 850px;
-		height: 12px;
+		height: 6px;
 		float: left;
 		border-radius: 5px;
 		background: #515960;
@@ -401,6 +406,9 @@ header {
 	li.operator {
 		border: none;
 		font-size: 0.8em;
+	}
+	li.number:hover {
+		cursor: pointer;
 	}
 }
 
@@ -490,15 +498,16 @@ header {
 			overflow: hidden; 
 			color: #fff;
 			margin: 5px 10px 10px 10px;
-			@include text(0.875em, 300);
+			@include text(0.755em, 300);
 		}
 		.index {
 			position: absolute;
 			width: 100%;
 			bottom: 0;
-			height: 20px;
+			height: 10px;
+			line-height: 10px;
 			padding: 2px 0;
-			@include text(0.875em, 300);
+			@include text(0.675em, 300);
 		}
 		img {
 			width: 130px;

@@ -1,11 +1,12 @@
-(function() {
+  (function() {
   var orderedBooksArray = [];
   var currentBook;
 
   var orderedBooks = bookeeboo.orderedBooks = {
+    mainColorOfOrderedBook: {},
     //initialise
     init: function() {
-      getQueue();
+      getQueue(redrawOrderedListInHtml);
 
       $(".ordered-books ul").sortable(sortingOrderedBooks);
 
@@ -54,8 +55,11 @@
       $(".ordered-books").removeClass("start-sorting");
       var orderedIds = findOrderedIds();
       postChangesInOrderedBooks(orderedIds);
+      updateOrderedBooksIndexes();  
     },
     receive: function( event, ui ) {
+      console.log("HELLO");
+
       var unorderedIds = findUnorderedIds();
       console.log(unorderedIds);
       $.post('/api/order/unordered', {unordered: unorderedIds});
@@ -65,63 +69,72 @@
     }
   };
 
-  function getQueue() {
+  function updateOrderedBooksIndexes() {
+    $('.ordered-books li').each(function(index) {
+      $(this).find('.index').html(index + 1);
+    });
+  }
+
+  function getQueue(successCallback) {
     $.ajax('/api/books/queue', {
       success: function(response) {
         orderedBooksArray = response;
-          
-        var htmlOrdered = common.buildBookHtml(orderedBooksArray);
-        rewriteOrederOfOrderedBooks(htmlOrdered);
         setNewCurrentBook();
+
+        if (typeof(successCallback) == "function") {
+          successCallback();  
+        }
       },
       error: function(request, errorType, errorMessage) {
-      console.log("Error: " + errorType + " with message: " + errorMessage);
+        console.log("Error: " + errorType + " with message: " + errorMessage);
       }
     });
   }
 
-  function postChangesInOrderedBooks(orderedIds) {
-    $.post('/api/order/queue', {queue: orderedIds}, function() {
-      getQueue();
-    });
+  function redrawOrderedListInHtml() {
+    var htmlOrdered = common.buildBookHtml(orderedBooksArray);
+    rewriteOrderOfOrderedBooks(htmlOrdered);
   }
 
-  function rewriteOrederOfOrderedBooks(list) {
+  function postChangesInOrderedBooks(orderedIds) {
+    $.post('/api/order/queue', {queue: orderedIds}, getQueue);
+  }
+
+  function rewriteOrderOfOrderedBooks(list) {
     $(".ordered-books ul").empty();
     $(".ordered-books ul").append(list);
 
     setTimeout(function() {
       setNewBackground(); //color chief for index
-    }, 100);
+    }, 300);
   }
 
   function setNewCurrentBook() {
     currentBook = orderedBooksArray[0];
     console.log(currentBook);
     $(".current-reading .cover").css('background', 'url(' + currentBook.imageUrl + ') no-repeat');
-    $(".current-reading .cur-header h3").html(currentBook.title);
-    $(".current-reading .cur-header .num-of-pages").html(currentBook.pageCount + " pages");
-    $(".current-reading .details p").html(currentBook.description);
+    $(".current-reading .cur-header h3").html(currentBook.title + "<span>" + currentBook.pageCount + " pages</span>");
+    $(".current-reading .details p").html(currentBook.description ? currentBook.description : "No description");
     $(".current-reading .last-page").html(currentBook.pageCount);
     setNewSliderForNewCurrentBook(currentBook); 
   }
 
   function deleteFromQueueOnServer(index) {
-    $.post('/api/books/delete-from-queue', {bookId: index});
-    setTimeout(function() {
-      getQueue(); // setTimeOut because of parallel functions
-    }, 100);
+    $.post('/api/books/delete-from-queue', {bookId: index}, function() {
+      getQueue(redrawOrderedListInHtml); 
+    });
   }
 
   function changeCounterNumber(operator, changingNumber) {
+    var result;
     if (operator.hasClass("minus")) {
-      var result = currentBook.currentPage - changingNumber;
+      result = currentBook.currentPage - changingNumber;
       if (result <= 0) {
         return;
       }
     }
     else if (operator.hasClass("plus")) {
-      var result = currentBook.currentPage + changingNumber;
+      result = currentBook.currentPage + changingNumber;
       if (result > currentBook.pageCount) {
         return;
       }
@@ -131,18 +144,18 @@
     currentBook.currentPage = result; //send new value to local current object
     $.post('/api/books/page', {bookId: currentBook.id, page: result}, function() {
       console.log(result);
-      getQueue();
+      getQueue(rewriteOrderOfOrderedBooks);
     });
   }
 
   function findUnorderedIds() {
-  unorderedIds = [];
-  $(".unordered-books li").each(function() {
-    var value = $(this).find('input').val();
-    unorderedIds.push(parseInt(value));
-  });
+    unorderedIds = [];
+    $(".unordered-books li").each(function() {
+      var value = $(this).find('input').val();
+      unorderedIds.push(parseInt(value));
+    });
     return unorderedIds;
-}
+  }
 
 function findOrderedIds() {
   orderedIds = [];

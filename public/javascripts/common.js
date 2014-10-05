@@ -1,4 +1,4 @@
-window.common = {
+var common = bookeeboo.common = {
   currentBook: {},
   buildBookHtml: function(array) {
     var index = 0;

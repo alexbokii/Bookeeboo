@@ -7,7 +7,7 @@
 
   var unorderedBooks = bookeeboo.unorderedBooks = {
     init: function() {
-      searchDeleteSign(false);
+      showSearchCloseIcon(false);
       getUnorderedList();
 
       $(".unordered-books").on({
@@ -21,19 +21,18 @@
         deleteUnorderedBookFromServer(id);
       });
 
-      $( ".unordered-books ul" ).sortable({connectWith: ".connectedSortable"}).disableSelection();
+      $( ".unordered-books ul" ).sortable(sortingUnorderedBooks).disableSelection();
 
       $(".input-field").keyup(function() {
-        resetPreviousSearch();
-        clearInterval(timerID);
-        timerID = setTimeout(bookSearch, 300);
-      });
-
-      $(".input-field").keypress(function(e) {
-        if(e.which == 13) {
+        if(!$(".input-field").val()) {
+          showSearchCloseIcon(false);
           resetPreviousSearch();
-          bookSearch();
+
+          return;
         }
+
+        clearInterval(timerID);
+        timerID = setTimeout(bookSearch, 700);
       });
 
       $('.panel').on('click', '.add-book', function() {
@@ -46,12 +45,12 @@
       });
 
       $(".input-field").focus(function() {
-        searchDeleteSign(true);
+        showSearchCloseIcon(true);
       });
 
       $(".input-field").focusout(function() {
         if ($(".hidden-panel ul li").length === 0) {
-          searchDeleteSign(false);
+          showSearchCloseIcon(false);
         } 
     });
 
@@ -59,7 +58,7 @@
       $('.hidden-panel ul').empty();
       $('.hidden-panel p').remove();
       $('.input-field').val('');
-      searchDeleteSign(false);
+      showSearchCloseIcon(false);
     });
 
     $('.hidden-panel').scroll(function() {
@@ -68,7 +67,17 @@
   }
 };
 
-  function searchDeleteSign(isVisible) {
+  var sortingUnorderedBooks = {
+    connectWith: ".connectedSortable",
+    start: function( event, ui ) {
+      $(".ordered-books").addClass("start-sorting");
+    },
+    stop: function( event, ui ) {
+      $(".ordered-books").removeClass("start-sorting");
+    }
+  };
+
+  function showSearchCloseIcon(isVisible) {
     if (isVisible === true) {
       $('#search-delete').show();
     }
@@ -108,9 +117,15 @@
   }
 
   function arrangeData(searchResult) {
+    if (!$(".input-field").val()) {
+      resetPreviousSearch();
+      return;
+    }
+
+    resetPreviousSearch();
     searchInProgress = false;
     if (searchResult.total == 0) {
-      $(".hidden-panel").append("<p>Unfortunately, no results matched</p>");
+      $(".hidden-panel ul").html("<li>Unfortunately, no results matched</li>");
     }
     else {
       currentSearch = searchResult.books;
@@ -119,23 +134,29 @@
   }
 
   function resetPreviousSearch() {
+    searchPageCounter = 1;
     currentSearch = [];
     $('.hidden-panel ul').empty();
   }
 
   function showSearchResult(currentSearch) {
     $.each(currentSearch, function(index, book) {
-    var newEl = "<li>"
-      + "<div class='book-cover' style='background-image: url(" + book.imageUrl + ");'></div>"
-      + "<div class='book-description'>"
-      + "<h2>" + book.title +"</h2>"
-      + "<p>" + book.description +"</p>"
-      + "</div>"
-      + "<button class='add-book'>Add</button>"
-      + "<div style='clear: both'></div>"
-      + "<div class='separate-line'></div>"
-      +"</li>";
-      $(".hidden-panel ul").append(newEl);
+      var description = book.description;
+      if (!book.description) {
+        description = "No description";
+      }
+
+      var newEl = "<li>"
+        + "<div class='book-cover' style='background-image: url(" + book.imageUrl + ");'></div>"
+        + "<div class='book-description'>"
+        + "<h2>" + book.title +"</h2>"
+        + "<p>" + description +"</p>"
+        + "</div>"
+        + "<button class='add-book'>Add</button>"
+        + "<div style='clear: both'></div>"
+        + "<div class='separate-line'></div>"
+        +"</li>";
+        $(".hidden-panel ul").append(newEl); 
     });
   }
 
@@ -158,7 +179,7 @@
 
   function unsuccessfulAddingOfBook() {
     alert("You can't add new book. Max quantity of books without order - 6");
-    searchDeleteSign(false);
+    showSearchCloseIcon(false);
     $('.hidden-panel ul').empty();
     $('.input-field').val('');
     $('html, body').animate({
@@ -166,13 +187,14 @@
     }, 300);
   }
 
+  //load on scroll
   function loadMoreOnScroll() {
     if (searchInProgress) {
-      return
+      return;
     }
 
-    else if ($('.hidden-panel').scrollTop() == $('.hidden-panel')[0].scrollHeight - $(window).height()) {
-      console.log("Next loading");
+    var isPassed70PercentOfScroll = $('.hidden-panel').scrollTop() > ($('.hidden-panel')[0].scrollHeight - $(window).height()) / 100 * 70;
+    if (isPassed70PercentOfScroll) {
       searchInProgress = true;
       scrolledToTheEnd();
     }
