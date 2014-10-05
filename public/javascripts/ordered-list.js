@@ -58,14 +58,14 @@
       updateOrderedBooksIndexes();  
     },
     receive: function( event, ui ) {
-      console.log("HELLO");
-
       var unorderedIds = findUnorderedIds();
       console.log(unorderedIds);
       $.post('/api/order/unordered', {unordered: unorderedIds});
 
       var orderedIds = findOrderedIds();
-      postChangesInOrderedBooks(orderedIds);
+      $.post('/api/order/queue', {queue: orderedIds}, function() {
+        getQueue(redrawOrderedListInHtml);
+      });
     }
   };
 

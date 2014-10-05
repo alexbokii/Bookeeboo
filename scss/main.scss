@@ -87,7 +87,7 @@ header {
 		padding: 10px 30px;
 		background: $bg-base;
 		a {
-			@include text(1.125em, 300);
+			@include text(1em, 300);
 			line-height: 32px;
 		}
 	}
@@ -253,7 +253,7 @@ header {
 					span {
 						bottom: 2px;
 						margin-left: 20px;
-						@include text(0.675em, 300);
+						@include text(0.575em, 300);
 					}
 				}
 			}
