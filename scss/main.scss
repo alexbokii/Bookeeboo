@@ -216,7 +216,7 @@ header {
 		}
 		button#search-delete { 
 			width: 40px;
-			height: 40px;
+			line-height: 44px;
 			position: absolute;
 			right: 30px;
 			top: 23px;
@@ -226,6 +226,10 @@ header {
 			cursor: pointer;
 			outline: none;
 			@include text(1.8em, 300);
+			img {
+				width: 50%;
+				height: 50%;
+			}
 		}
 	}
 	.current-reading {
@@ -573,7 +577,7 @@ div.colorBl {
 }
 
 .start-sorting {
-	background-color: #8093A5;
+	background-color: #384651;
 	-webkit-transition: all 0.2s ease-out;
 }
 
@@ -585,13 +589,23 @@ div.colorBl {
 .sorting-delete {
 	position: absolute;
 	z-index: 1000;
-	top: 0;
-	right: 0;
-	width: 30px;
-	height: 30px;
+	top: 5px;
+	right: 5px;
+	overflow: hidden;
+	width: 22px;
+	height: 22px;
 	text-align: center;
-	background-color: rgba(192, 61, 69, 0.7);
+	background-image: url(../images/delete-book.png);
+	background-size: cover;
+	// background-color: rgba(192, 61, 69, 0.7);
 	@include text(1.5em, 300);
+	&:hover {
+		cursor: pointer;
+	}
+}
+
+.unordered-books .sorting-delete {
+	right: 25px;
 }
 
 .add-book {

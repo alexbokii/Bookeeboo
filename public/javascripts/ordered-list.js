@@ -11,7 +11,7 @@
       $(".ordered-books ul").sortable(sortingOrderedBooks);
 
       $(".ordered-books").on({
-        mouseenter: function() {$(this).append("<div class='sorting-delete'>x</div>");},
+        mouseenter: function() {$(this).append("<div class='sorting-delete'></div>");},
         mouseleave: function() {$(this).find('.sorting-delete').remove();}
       }, "li");
 
@@ -144,7 +144,7 @@
     currentBook.currentPage = result; //send new value to local current object
     $.post('/api/books/page', {bookId: currentBook.id, page: result}, function() {
       console.log(result);
-      getQueue(rewriteOrderOfOrderedBooks);
+      getQueue(redrawOrderedListInHtml);
     });
   }
 
