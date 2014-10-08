@@ -22,7 +22,13 @@ router.post('/api/books', function(req, res) {
 
   var newId;
   Promise.join(unordered.getUnordered(req.body.userId), book.save(req.body.book), function(unorderedOrder, bookId) {
-    var newUnordered = bookId + ',' + unorderedOrder;
+    var newUnordered = '';
+    if (unorderedOrder) {
+     newUnordered = bookId + ',' + unorderedOrder;
+    } else {
+      newUnordered = bookId.toString();
+    }
+
     newId = bookId[0];
 
     return unordered.save(req.body.userId, newUnordered);
@@ -123,7 +129,13 @@ router.get('/api/books/unordered', function(req, res) {
 router.post('/api/order/queue', function(req, res) {
   //check that userId is for the user from the session
   var userId = 1;
-  return queue.save(userId, req.body.queue.join(','))
+
+  var newOrderedBooks = '';
+  if (req.body.queue) {
+    newOrderedBooks = req.body.queue.join(',');
+  }
+
+  return queue.save(userId, newOrderedBooks)
   .then(function() {
     res.send(200);
   })
@@ -135,7 +147,13 @@ router.post('/api/order/queue', function(req, res) {
 router.post('/api/order/unordered', function(req, res) {
   //check that userId is for the user from the session
   var userId = 1;
-  return unordered.save(userId, req.body.unordered.join(','))
+
+  var newUnorderedBooks = '';
+  if (req.body.unordered) {
+    newUnorderedBooks = req.body.unordered.join(',');
+  }
+
+  return unordered.save(userId, newUnorderedBooks)
   .then(function() {
     res.send(200);
   })

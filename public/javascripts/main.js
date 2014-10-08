@@ -1,22 +1,23 @@
 $(document).ready(function() {
-  //1. Bang effect
-  $(".page-keeper, .unordered-line").hide();
-  $(".unordered-books button").on('click', function() {
-    var pageKeeperContent = $(".unordered-books li").length;
-    $('.page-keeper').html(pageKeeperContent);
-    var c = $("ul li").length;
-    if ( $( ".unordered-wrapper" ).is( ":hidden" ) ) {
-      $( ".unordered-wrapper" ).slideDown(700, "easeOutQuint");
-      $(".page-keeper, .unordered-line").slideUp();
-      $(".unordered-books").removeClass("hidden-height");
-    } 
-    else {
-      $( ".unordered-wrapper" ).slideUp(900, "easeInOutQuint", function() {
-        $(".unordered-books").addClass("hidden-height");
-        $(".page-keeper, .unordered-line").slideDown();
-      });
-    }
-  });
+  // 1. Bang effect
+    $(".page-keeper, .unordered-line").hide();
+
+    $('.unordered-books button').on('click', function(e) {
+      if($('.unordered-books').hasClass('slided-up')) {
+        $('.unordered-books').removeClass('slided-up');
+        $('.unordered-wrapper').slideDown();
+        console.log(e.type + " down");
+        $(".page-keeper, .unordered-line").hide();
+      }
+      else {
+        $('.unordered-wrapper').slideUp();
+        $('.unordered-books').addClass("slided-up");
+        console.log(e.type + " up");
+        setTimeout(function() {
+          $(".page-keeper, .unordered-line").show();
+        }, 300);
+      }    
+    });
 
   //2. Height of h5 in ordered list
   // Every li has own extra height for title. Count this height and the height of title here.
@@ -32,5 +33,4 @@ $(document).ready(function() {
       $(h5).height(result);
     });
   } 
-  
 }); // end of ready

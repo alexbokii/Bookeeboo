@@ -492,14 +492,14 @@ header {
 		display: inline-block;
 		width: 150px;
 		margin: 10px 35px;
-		height: 250px;
+		height: 260px;
 		overflow: hidden;
 		padding-top: 10px;
 		text-align: center;
 		background-color: #515960;
 		h5 {
+			height: 40px;
 			box-sizing: border-box;
-			overflow: hidden; 
 			color: #fff;
 			margin: 5px 10px 10px 10px;
 			@include text(0.755em, 300);
@@ -515,7 +515,7 @@ header {
 		}
 		img {
 			width: 130px;
-			height: auto;
+			height: 180px;
 		}
 	}
 }

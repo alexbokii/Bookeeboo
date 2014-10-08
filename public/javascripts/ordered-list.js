@@ -104,6 +104,10 @@
     $(".ordered-books ul").empty();
     $(".ordered-books ul").append(list);
 
+    $('.ordered-books li h5').each(function() {
+      $clamp(this, {clamp: 'auto'});
+    });
+
     setTimeout(function() {
       setNewBackground(); //color chief for index
     }, 300);
