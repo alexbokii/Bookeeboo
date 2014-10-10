@@ -425,14 +425,16 @@ header {
 		background-color: $bg-base;
 		border-bottom: 1px solid #747579;
 	}
-	.page-keeper {
+	.booksnumber-keeper {
 		width: 100px;
 		margin: 0 auto;
 		background-color: $bg-section;
 		text-align: center;	
 		color: #F0B446;
 		-webkit-transform: translate(0%, 50%);
-		@include text(1.5em, 300);
+		span {
+			@include text(1.5em, 300);
+		}
 	}
 	&.hidden-height {
 		height: 65px;

@@ -1,23 +1,40 @@
 $(document).ready(function() {
   // 1. Bang effect
-    $(".page-keeper, .unordered-line").hide();
+    $(".booksnumber-keeper, .unordered-line").hide();
 
-    $('.unordered-books button').on('click', function(e) {
-      if($('.unordered-books').hasClass('slided-up')) {
-        $('.unordered-books').removeClass('slided-up');
-        $('.unordered-wrapper').slideDown();
-        console.log(e.type + " down");
-        $(".page-keeper, .unordered-line").hide();
+    $('.unordered-books button').on('click', function() {
+      if ($('.unordered-wrapper').hasClass('slided-up')) {
+        slideUnorderedListDown();
       }
       else {
-        $('.unordered-wrapper').slideUp();
-        $('.unordered-books').addClass("slided-up");
-        console.log(e.type + " up");
-        setTimeout(function() {
-          $(".page-keeper, .unordered-line").show();
-        }, 300);
-      }    
+        slideUnorderedListUp();
+      }
     });
+
+    function slideUnorderedListUp() {
+      $('.unordered-wrapper').addClass('slided-up');
+      $('.unordered-wrapper').slideUp();
+      showNumberOfBookInUnordered();
+    }
+
+    function slideUnorderedListDown() {
+      removeHtmlUnderSlider();
+      $('.unordered-wrapper').removeClass('slided-up');
+      $('.unordered-wrapper').slideDown();
+    }
+
+    function showNumberOfBookInUnordered() {
+      var unorderedLength = $('.unordered-books li').length;
+      $('.unordered-books').animate({'height':'55px'}, 300, function() {
+        $('.booksnumber-keeper span').html(unorderedLength);
+        $('.booksnumber-keeper, .unordered-line').show(500);
+      });
+    }
+
+    function removeHtmlUnderSlider() {
+      $('.unordered-books').css({'height':''});
+      $(".booksnumber-keeper, .unordered-line").hide();
+    }
 
   //2. Height of h5 in ordered list
   // Every li has own extra height for title. Count this height and the height of title here.
