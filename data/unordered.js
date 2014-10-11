@@ -16,6 +16,11 @@ unordered.save = function(userId, unorderedString) {
 unordered.getBooks = function(userId) {
   return user.get(userId).then(function(users) {
     var user = users[0];
+
+    if (!user.unorderedOrder) {
+      return [];
+    }
+
     var order = _.map(user.unorderedOrder.split(','), function(u) {return parseInt(u, 10);});
 
     return knex('books').whereIn('id', order).then(function(books) {

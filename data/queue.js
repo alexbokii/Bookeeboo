@@ -16,6 +16,11 @@ queue.save = function(userId, queueOrderString) {
 queue.getBooks = function(userId) {
   return user.get(userId).then(function(users) {
     var user = users[0];
+
+    if (!user.queueOrder) {
+      return [];
+    }
+
     var order = _.map(user.queueOrder.split(','), function(u) {return parseInt(u, 10);});
 
     return knex('books').whereIn('id', order).then(function(books) {

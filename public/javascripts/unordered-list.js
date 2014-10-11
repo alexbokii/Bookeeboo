@@ -11,7 +11,7 @@
       getUnorderedList();
 
       $(".unordered-books").on({
-        mouseenter: function() {$(this).append("<div class='sorting-delete'>x</div>");},
+        mouseenter: function() {$(this).append("<div class='sorting-delete'></div>");},
         mouseleave: function() {$(this).find('.sorting-delete').remove();}
       }, "li");
 

@@ -8,7 +8,6 @@ var Promise = require('bluebird');
 
 testData.createTestUser = function() {
   var testUser = {
-    id: 1,
     email: 'test@gmail.com',
     passwordHash: ''
   };

@@ -1,36 +1,39 @@
-$(document).ready(function() {
-  //1. Bang effect
-  $(".page-keeper, .unordered-line").hide();
-  $(".unordered-books button").on('click', function() {
-    var pageKeeperContent = $(".unordered-books li").length;
-    $('.page-keeper').html(pageKeeperContent);
-    var c = $("ul li").length;
-    if ( $( ".unordered-wrapper" ).is( ":hidden" ) ) {
-      $( ".unordered-wrapper" ).slideDown(700, "easeOutQuint");
-      $(".page-keeper, .unordered-line").slideUp();
-      $(".unordered-books").removeClass("hidden-height");
-    } 
+$(function() {
+  // Slide effect iof unordered books section
+  $(".booksnumber-keeper, .unordered-line").hide();
+
+  $('.unordered-books button').on('click', function() {
+    if ($('.unordered-wrapper').hasClass('slided-up')) {
+      slideUnorderedListDown();
+    }
     else {
-      $( ".unordered-wrapper" ).slideUp(900, "easeInOutQuint", function() {
-        $(".unordered-books").addClass("hidden-height");
-        $(".page-keeper, .unordered-line").slideDown();
-      });
+      slideUnorderedListUp();
     }
   });
 
-  //2. Height of h5 in ordered list
-  // Every li has own extra height for title. Count this height and the height of title here.
-  function setHeight() {
-    $(".ordered-books li").each(function() {
-      var h5 = $(this).find("h5")[0];
-      var img = $(this).find("img")[0];
+  function slideUnorderedListUp() {
+    $('.unordered-wrapper').addClass('slided-up');
+    $('.unordered-wrapper').slideUp();
+    showNumberOfBookInUnordered();
+  }
 
-      var h5Height = $(h5).height();
-      var imgHeight = $(img).height();
+  function slideUnorderedListDown() {
+    removeHtmlUnderSlider();
+    $('.unordered-wrapper').removeClass('slided-up');
+    $('.unordered-wrapper').slideDown();
+  }
 
-      var result = 250 - imgHeight - 24 - 20;
-      $(h5).height(result);
+  function showNumberOfBookInUnordered() {
+    var unorderedLength = $('.unordered-books li').length;
+    $('.unordered-books').animate({'height':'55px'}, 300, function() {
+      $('.booksnumber-keeper span').html(unorderedLength);
+      $('.booksnumber-keeper, .unordered-line').show();
     });
-  } 
-  
-}); // end of ready
+  }
+
+  function removeHtmlUnderSlider() {
+    $('.unordered-books').css({'height':''});
+    $(".booksnumber-keeper, .unordered-line").hide();
+  }
+
+});

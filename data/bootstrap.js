@@ -9,7 +9,7 @@ var tables = [
 var definitions = {
   'users': function(table) {
     table.increments('id').primary();
-    table.string('email');
+    table.string('email').unique();
     table.string('passwordHash').notNullable();
     table.string('unorderedOrder').defaultTo('');
     table.string('queueOrder').defaultTo('');

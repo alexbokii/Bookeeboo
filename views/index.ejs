@@ -6,7 +6,7 @@
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,700italic,900italic,900,700,500,500italic,300,100,400italic,100italic,300italic'
           rel='stylesheet' type='text/css'>
     
-    <script src="../javascripts/thirdparty/jquery-1.11.1.min.js"></script>
+    <script src="../javascripts/thirdparty/jquery-ui/external/jquery/jquery.js"></script>
     <script>
      $(function() {
        $('.signin').click(function() {
@@ -20,11 +20,14 @@
     </script>
   </head>
   <body>
+
     <div class="wrapper">
+
       <div class="container">
+
         <header class="landing-header">
           <div class="opacity">
-              <h1 class="landing">Bookeeboo</h1>
+            <h1 class="landing">Bookeeboo</h1>
             <div class="description">
               <p>Our small web application helps you to create you own reading queue.</p>
               <p>Stop forgetting what you wanted to read and in what order. Use bookeeboo.</p>
@@ -34,6 +37,7 @@
               <input name="email" type="email" placeholder="Email" class="input-field" required>
               <input name="password" type="password" placeholder="Password" class="input-field" required>
               <input class='submit-type' type="hidden" name="type" value="signin" />
+              <% if (error) { %> <p><%= error %></p> <% } %>
               <div class="buttons-container">
                 <button class="signup">Sign Up</button>
                 <button class="signin">Sign In</button>
@@ -71,7 +75,10 @@
             </ul>
           </div>
         </footer> 
+
       </div>
+
     </div>
+    
   </body>
 </html>
