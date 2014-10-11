@@ -49,8 +49,7 @@ router.get('/main', auth, function(req, res) {
 })
 
 router.post('/api/books', auth, function(req, res) {
-  req.body.userId = 1;
-  req.body.book.userId = 1;
+  req.body.book.userId = req.session.passport.user;
 
   var newId;
   Promise.join(unordered.getUnordered(req.body.userId), book.save(req.body.book), function(unorderedOrder, bookId) {
@@ -77,6 +76,7 @@ router.post('/api/books', auth, function(req, res) {
 });
 
 router.post('/api/books/page', auth, function(req, res) {
+  //TODO check that user has user id
   book.get(req.body.bookId).then(function(b) {
     return book.updateCurrentPage(req.body.bookId, req.body.page);
   })
@@ -89,7 +89,7 @@ router.post('/api/books/page', auth, function(req, res) {
 });
 
 router.post('/api/books/delete-from-queue', auth, function(req, res) {
-  req.body.userId = 1;
+  req.body.userId = req.session.passport.user;
   //check that userId is for the user from the session and that book belongs to the user
   book.get(req.body.bookId)
     .then(function(books) {
@@ -115,8 +115,8 @@ router.post('/api/books/delete-from-queue', auth, function(req, res) {
 });
 
 router.post('/api/books/delete-from-unordered', auth, function(req, res) {
-  req.body.userId = 1;
-  //check that userId is for the user from the session and that book belongs to the user
+  req.body.userId = req.session.passport.user;
+  //TODO check that userId is for the user from the session and that book belongs to the user
   book.get(req.body.bookId)
     .then(function(books) {
       var b = books[0];
@@ -141,7 +141,9 @@ router.post('/api/books/delete-from-unordered', auth, function(req, res) {
 });
 
 router.get('/api/books/queue', auth, function(req, res) {
-  queue.getBooks(1).then(function(results) {
+  var userId = req.session.passport.user;
+  
+  queue.getBooks(userId).then(function(results) {
     return res.json(results);
   })
     .catch(function(err) {
@@ -150,7 +152,7 @@ router.get('/api/books/queue', auth, function(req, res) {
 });
 
 router.get('/api/books/unordered', auth, function(req, res) {
-  unordered.getBooks(1).then(function(results) {
+  unordered.getBooks(req.session.passport.user).then(function(results) {
     return res.json(results);
   })
     .catch(function(err) {
@@ -160,7 +162,7 @@ router.get('/api/books/unordered', auth, function(req, res) {
 
 router.post('/api/order/queue', auth, function(req, res) {
   //check that userId is for the user from the session
-  var userId = 1;
+  var userId = req.session.passport.user;
 
   var newOrderedBooks = '';
   if (req.body.queue) {
@@ -178,7 +180,7 @@ router.post('/api/order/queue', auth, function(req, res) {
 
 router.post('/api/order/unordered', function(req, res) {
   //check that userId is for the user from the session
-  var userId = 1;
+  var userId = req.session.passport.user;
 
   var newUnorderedBooks = '';
   if (req.body.unordered) {

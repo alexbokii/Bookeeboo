@@ -107,6 +107,8 @@ header {
     header form .buttons-container {
       padding-top: 20px; }
       header form .buttons-container button {
+        color: #E6E6E6;
+        cursor: pointer;
         width: 25%;
         padding: 4px;
         font-size: 0.7em;
