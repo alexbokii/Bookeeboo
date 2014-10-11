@@ -49,10 +49,11 @@ router.get('/main', auth, function(req, res) {
 })
 
 router.post('/api/books', auth, function(req, res) {
-  req.body.book.userId = req.session.passport.user;
+  var userId = req.session.passport.user;
+  req.body.book.userId = userId;
 
   var newId;
-  Promise.join(unordered.getUnordered(req.body.userId), book.save(req.body.book), function(unorderedOrder, bookId) {
+  Promise.join(unordered.getUnordered(userId), book.save(req.body.book), function(unorderedOrder, bookId) {
     var newUnordered = '';
     if (unorderedOrder) {
       newUnordered = bookId + ',' + unorderedOrder;
@@ -62,7 +63,7 @@ router.post('/api/books', auth, function(req, res) {
 
     newId = bookId[0];
 
-    return unordered.save(req.body.userId, newUnordered);
+    return unordered.save(userId, newUnordered);
   })
     .then(function() {
       return book.get(newId);
@@ -89,13 +90,13 @@ router.post('/api/books/page', auth, function(req, res) {
 });
 
 router.post('/api/books/delete-from-queue', auth, function(req, res) {
-  req.body.userId = req.session.passport.user;
+  var userId = req.session.passport.user;
   //check that userId is for the user from the session and that book belongs to the user
   book.get(req.body.bookId)
     .then(function(books) {
       var b = books[0];
 
-      if (b.userId !== req.body.userId) {
+      if (b.userId !== userId) {
         return res.send(403);
       }
 
@@ -115,13 +116,13 @@ router.post('/api/books/delete-from-queue', auth, function(req, res) {
 });
 
 router.post('/api/books/delete-from-unordered', auth, function(req, res) {
-  req.body.userId = req.session.passport.user;
+  var userId = req.session.passport.user;
   //TODO check that userId is for the user from the session and that book belongs to the user
   book.get(req.body.bookId)
     .then(function(books) {
       var b = books[0];
 
-      if (b.userId !== req.body.userId) {
+      if (b.userId !== userId) {
         return res.send(403);
       }
 
