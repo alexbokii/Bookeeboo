@@ -12,6 +12,14 @@ router.get('/', function(req, res) {
   res.render('index');
 });
 
+router.post('/', function(req, res) {
+  var email = req.body.email;
+  var password = req.body.password;
+  var type = req.body.type;
+
+  console.log('email: ', email, ' password: ', password, ' type: ', type);
+});
+
 router.get('/main', function(req, res) {
   res.render('main');
 })
