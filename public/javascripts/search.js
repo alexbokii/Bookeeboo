@@ -22,6 +22,8 @@
 
     isSearchResetButtonVisible(searchInputHasText());
 
+    visibleLoadingSpinner(true);
+
     if(!searchInputHasText()) {
       resetSearch();
       return;
@@ -45,7 +47,9 @@
     }, 500);
   }
 
-  function getAndShowResultsOnPage(result) {
+  function getAndShowResultsOnPage(result) {  
+    visibleLoadingSpinner(false);
+
     if(result.books.length == 0) {
       $('.hidden-panel ul').html("<li class='no-result'><p>Unfortunately, no results matched</p></li>");
       return;
@@ -91,6 +95,7 @@
     $('.hidden-panel ul').empty();
     $('.input-field').val("");
     isSearchResetButtonVisible(false);
+    visibleLoadingSpinner(false);
   }
 
   function isSearchResetButtonVisible(visible) {
@@ -162,6 +167,15 @@
       isAvailable = true;
     }
     return isAvailable;
+  }
+
+  function visibleLoadingSpinner(visible) {
+    if (visible) {
+      $('#loading-spinner').css('visibility', 'visible');
+    }
+    else {
+      $('#loading-spinner').css('visibility', 'hidden');
+    }
   }
 
 })(); // end of main function
