@@ -50,7 +50,7 @@
   function getAndShowResultsOnPage(result) {  
     visibleLoadingSpinner(false);
 
-    if(result.books.length == 0) {
+    if(result.books.length === 0 && searchInputHasText()) {
       $('.hidden-panel ul').html("<li class='no-result'><p>Unfortunately, no results matched</p></li>");
       return;
     }
