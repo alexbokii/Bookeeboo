@@ -24,6 +24,7 @@
 
     if(!searchInputHasText()) {
       resetSearch();
+      return;
     }
 
     wait(function() {
@@ -45,6 +46,10 @@
   }
 
   function getAndShowResultsOnPage(result) {
+    if(result.books.length == 0) {
+      $('.hidden-panel ul').html("<li class='no-result'><p>Unfortunately, no results matched</p></li>");
+      return;
+    }
     if(searchInputHasText()) {
       var resultHTML = result.books.map(mapJSONToHTML);
       if (searchPage === 1) {
@@ -127,10 +132,36 @@
 
   // add book 
   function addBookToUnordered() {
-    var index = $(this).closest('li').index();
-    var book = foundBooks[index];
+    if(isSpaceForBookAveilable()) {
+      var index = $(this).closest('li').index();
+      var book = foundBooks[index];
+      markBookAsAdded($(this));
 
-     $.post('/api/books', {book: book}, bookeeboo.unorderedBooks.populateUnorderedListFromServer);
+      $.post('/api/books', {book: book}, bookeeboo.unorderedBooks.populateUnorderedListFromServer);
+    }
+    else {
+      markBookAsCanNotBeAdded($(this));
+    }
+    
+  }
+
+  function markBookAsAdded(el) {
+    el.addClass('added').removeClass('not-added').html('Added');
+  }
+
+  function markBookAsCanNotBeAdded(el) {
+    el.addClass('not-added').html('Clear your unordered books fefore adding new');
+  }
+
+  function isSpaceForBookAveilable() {
+    var isAvailable;
+    if($('.unordered-books li').length === 6) {
+      isAvailable = false;
+    }
+    else {
+      isAvailable = true;
+    }
+    return isAvailable;
   }
 
 })(); // end of main function
