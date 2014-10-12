@@ -5,11 +5,12 @@ var unordered = require('./unordered');
 var queue = require('./queue');
 var _ = require('lodash');
 var Promise = require('bluebird');
+var passwordHash = require('password-hash');
 
 testData.createTestUser = function() {
   var testUser = {
     email: 'test@gmail.com',
-    passwordHash: ''
+    passwordHash: passwordHash.generate('test')
   };
 
   return knex('users').where({

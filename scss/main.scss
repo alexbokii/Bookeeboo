@@ -233,8 +233,17 @@ header {
 		}
 	}
 	.current-reading {
+		position: relative;
 		overflow: hidden;
 		padding: 40px 0 0 30px;
+		#loading-spinner {
+			position: absolute;
+			top: 0;
+			right: 30px;
+			width: 63px;
+
+			visibility: hidden;
+		}
 		.cover {
 			width: 175px;
 			height: 270px;
@@ -612,4 +621,26 @@ div.colorBl {
 
 .add-book {
 	outline: none;
+}
+
+li.no-result {
+	width: 320px;
+	margin: 0 auto;
+	padding-bottom: 30px;
+	p {
+		@include text(1.5em, 300);
+	}
+}
+
+button {
+	&.added {
+		border: none;
+		color: #33CC78;
+	}
+	&.not-added {
+		width: 120px;
+		border: none;
+		line-height: 1.5em;
+		color: #CCBE36;
+	}
 }

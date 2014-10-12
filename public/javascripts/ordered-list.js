@@ -3,7 +3,6 @@
   var currentBook;
 
   var orderedBooks = bookeeboo.orderedBooks = {
-    mainColorOfOrderedBook: {},
     //initialise
     init: function() {
       getQueue(redrawOrderedListInHtml);
@@ -161,62 +160,62 @@
     return unorderedIds;
   }
 
-function findOrderedIds() {
-  orderedIds = [];
-  $(".ordered-books li").each(function() {
-    var value = $(this).find('input').val();
-    orderedIds.push(parseInt(value));
-  });
-  return orderedIds;
-}
-
-//Set bg-color and font-coloe for div with index
-function setNewBackground() {
-  $(".ordered-books li").each(function() {
-    var myImage = $(this).find("img")[0];
-    var indexContainer = $(this).find(".index")[0];
-    var colorThief = new ColorThief();
-    var color = colorThief.getColor(myImage);
-    $(this).find(".index").css('backgroundColor', "rgb(" + color + ")");
-  
-    setTextColor(color, indexContainer);
-  });
-}
-
-// setHeight();
-function setTextColor(array, container) {
-  var colorNumber = array[0] + array[1] + array[2];
-  if (colorNumber > 300) {
-    $(container).addClass('colorBl');
+  function findOrderedIds() {
+    orderedIds = [];
+    $(".ordered-books li").each(function() {
+      var value = $(this).find('input').val();
+      orderedIds.push(parseInt(value));
+    });
+    return orderedIds;
   }
-  else if (colorNumber <= 300) {
-    $(container).addClass('colorWh');
+
+  //Set bg-color and font-coloe for div with index
+  function setNewBackground() {
+    $(".ordered-books li").each(function() {
+      var myImage = $(this).find("img")[0];
+      var indexContainer = $(this).find(".index")[0];
+      var colorThief = new ColorThief();
+      var color = colorThief.getColor(myImage);
+      $(this).find(".index").css('backgroundColor', "rgb(" + color + ")");
+    
+      setTextColor(color, indexContainer);
+    });
   }
-}
 
-// Slider
-function setNewSliderForNewCurrentBook(currentBook) {
-  updateSliderInfo({max: currentBook.pageCount, val: currentBook.currentPage});
-
-  var position = currentBook.currentPage / (currentBook.pageCount / 100);
-  $(".page-counter").css({"left": ""+ position + "%"});
-  $(".ui-slider-handle").css({"left": ""+ position + "%"});
-
-  if (currentBook.currentPage > 0) {
-    $(".page-counter").html(currentBook.currentPage);
+  // setHeight();
+  function setTextColor(array, container) {
+    var colorNumber = array[0] + array[1] + array[2];
+    if (colorNumber > 300) {
+      $(container).addClass('colorBl');
+    }
+    else if (colorNumber <= 300) {
+      $(container).addClass('colorWh');
+    }
   }
-  else {
-    $(".page-counter").html("");
+
+  // Slider
+  function setNewSliderForNewCurrentBook(currentBook) {
+    updateSliderInfo({max: currentBook.pageCount, val: currentBook.currentPage});
+
+    var position = currentBook.currentPage / (currentBook.pageCount / 100);
+    $(".page-counter").css({"left": ""+ position + "%"});
+    $(".ui-slider-handle").css({"left": ""+ position + "%"});
+
+    if (currentBook.currentPage > 0) {
+      $(".page-counter").html(currentBook.currentPage);
+    }
+    else {
+      $(".page-counter").html("");
+    }
   }
-}
 
-function changeCounterPosition () {
-  var sliderPosition = parseFloat($(".ui-slider-handle").css('left'));
-  $(".page-counter").css({"left": ""+ sliderPosition + "px"});
-}
+  function changeCounterPosition () {
+    var sliderPosition = parseFloat($(".ui-slider-handle").css('left'));
+    $(".page-counter").css({"left": ""+ sliderPosition + "px"});
+  }
 
-function updateSliderInfo (params) {
-  $('.slider').slider('option', 'max', params.max);
-  $('.slider').slider('value', params.val);
-}
+  function updateSliderInfo (params) {
+    $('.slider').slider('option', 'max', params.max);
+    $('.slider').slider('value', params.val);
+  }
 })(); //end of main function
