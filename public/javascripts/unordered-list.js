@@ -24,7 +24,12 @@
       $( ".unordered-books ul" ).sortable(sortingUnorderedBooks).disableSelection();
     },
 
-    populateUnorderedListFromServer: getUnorderedList
+    populateUnorderedListFromServer: getUnorderedList,
+
+    isUnorderedBooksFull: function() {
+      var isFull = $('.unordered-books li').length === 6;
+      return isFull;
+    }
   };
 
   var sortingUnorderedBooks = {
@@ -37,12 +42,16 @@
     }
   };
 
-  function getUnorderedList() {
+  function getUnorderedList(callback) {
     $.ajax('/api/books/unordered', {
       success: function(response) {
         unorderedBooksArray = response;
         var htmlUnordered = common.buildBookHtml(unorderedBooksArray);
         rewriteOrederOfUnorderedBooks(htmlUnordered);
+        
+        if (callback) {
+          callback();  
+        }
       },
       error: function(request, errorType, errorMessage) {
         console.log("Error: " + errorType + " with message: " + errorMessage);
