@@ -78,7 +78,7 @@
       }
     var buttonText = "Add";
       if(bookeeboo.unorderedBooks.isUnorderedBooksFull()) {
-        buttonText = "Clear your unordered books fefore adding new";
+        buttonText = "Clear your unordered books before adding new";
         var buttonClass = 'not-added';
       }
 
@@ -157,13 +157,9 @@
     el.addClass('added').removeClass('not-added').html('Added');
   }
 
-  // function markBookAsCanNotBeAdded(el) {
-  //   $('.add-book').addClass('not-added').html('Clear your unordered books before adding new');
-  // }
-
   function changeAddButtonsIfUnorderedListIsFull() {
     if(bookeeboo.unorderedBooks.isUnorderedBooksFull()) {
-      $('button.add-book').html('Clear your unordered books fefore adding new');
+      $('button.add-book').html('Clear your unordered books before adding new');
       $('button.add-book').addClass('not-added');
     }
   }

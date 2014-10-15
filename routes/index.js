@@ -13,7 +13,7 @@ router.get('/', function(req, res) {
 });
 
 router.get('/main', function(req, res) {
-  res.render('main');
+  res.render('main', {isJustRegistered: true});
 })
 
 router.post('/api/books', function(req, res) {
