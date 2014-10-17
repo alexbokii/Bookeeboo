@@ -501,6 +501,9 @@ header {
 	padding: 50px;
 	overflow: hidden;
 	background-color: $bg-section;
+	ul {
+		min-height: 50px;
+	}
 	li {
 		position: relative;
 		display: inline-block;
@@ -532,6 +535,23 @@ header {
 			height: 180px;
 		}
 	}
+}
+
+section .empty {
+	display: block;
+	width: 50%;
+	height: 100px;
+	margin: 0 auto;
+	padding: 30px;
+	background: none;
+	float: none;
+	line-height: 1.5em;
+	text-align: center;
+	@include text(1.7em, 300);
+}
+
+section.unordered-books li.empty {
+	width: 100%;
 }
 
 footer {

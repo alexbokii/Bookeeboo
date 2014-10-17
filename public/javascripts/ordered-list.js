@@ -12,7 +12,7 @@
       $(".ordered-books").on({
         mouseenter: function() {$(this).append("<div class='sorting-delete'></div>");},
         mouseleave: function() {$(this).find('.sorting-delete').remove();}
-      }, "li");
+      }, "li:not('.empty')");
 
       $('.ordered-books').on('click', '.sorting-delete', function() {
         var el = $(this).closest('li');
@@ -101,6 +101,12 @@
 
   function rewriteOrderOfOrderedBooks(list) {
     $(".ordered-books ul").empty();
+
+    if(list.length === 0) {
+      $(".ordered-books ul").append('<li class="empty">Nothing in your reading queue. Add your books and start reading.</li> ');
+      return;
+    }
+    
     $(".ordered-books ul").append(list);
 
     $('.ordered-books li h5').each(function() {
@@ -114,6 +120,11 @@
 
   function setNewCurrentBook() {
     currentBook = orderedBooksArray[0];
+    if (currentBook === undefined) {
+      $('.pages').hide();
+      $('.current-reading').html("<p class='empty'>Use serach at the top of the page to add books to your queue.</p>");
+      return;
+    }
     console.log(currentBook);
     $(".current-reading .cover").css('background', 'url(' + currentBook.imageUrl + ') no-repeat');
     $(".current-reading .cur-header h3").html(currentBook.title + "<span>" + currentBook.pageCount + " pages</span>");

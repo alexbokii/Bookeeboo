@@ -13,7 +13,7 @@
       $(".unordered-books").on({
         mouseenter: function() {$(this).append("<div class='sorting-delete'></div>");},
         mouseleave: function() {$(this).find('.sorting-delete').remove();}
-      }, "li");
+      }, "li:not('.empty')");
 
       $('.unordered-books').on('click', '.sorting-delete', function() {
         var el = $(this).closest('li');
@@ -61,6 +61,10 @@
 
   function rewriteOrederOfUnorderedBooks(list) {
     $(".unordered-books ul").empty();
+
+    if(list.length === 0) {
+      $('.unordered-books ul').append(' <li class="empty">Nothing here</li>');
+    }
     $(".unordered-books ul").append(list);
     $(".unordered-books ul li h5, .unordered-books ul li .index").hide();
   }
