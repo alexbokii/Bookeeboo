@@ -1,13 +1,8 @@
 (function() {
   var unorderedBooksArray = [];
-  var currentSearch = [];
-  var searchPageCounter = 1;
-  var searchInProgress = false;
-  var timerID;
 
   var unorderedBooks = bookeeboo.unorderedBooks = {
     init: function() {
-      // showSearchCloseIcon(false);
       getUnorderedList();
 
       $(".unordered-books").on({
@@ -64,7 +59,9 @@
 
     if(list.length === 0) {
       $('.unordered-books ul').append(' <li class="empty">Nothing here</li>');
+      return;
     }
+
     $(".unordered-books ul").append(list);
     $(".unordered-books ul li h5, .unordered-books ul li .index").hide();
   }
@@ -74,7 +71,6 @@
       getUnorderedList();
     });
   }
-
 
 })(); // end of main function
 

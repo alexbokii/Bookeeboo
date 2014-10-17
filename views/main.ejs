@@ -15,6 +15,7 @@
     <script src="../javascripts/main.js"></script>
     <script src="../javascripts/common.js"></script>
     <script src="../javascripts/ordered-list.js"></script>
+    <script src="../javascripts/current-book.js"></script>
     <script src="../javascripts/unordered-list.js"></script>
     <script src="../javascripts/search.js"></script>
     <script src="../javascripts/tutorial.js"></script>
@@ -24,6 +25,7 @@
         bookeeboo.orderedBooks.init();
         bookeeboo.unorderedBooks.init();
         bookeeboo.search.init();
+        bookeeboo.currentBook.init();
 
         bookeeboo.isJustRegistered = <%= isJustRegistered %>;
         if (bookeeboo.isJustRegistered) {
@@ -38,6 +40,10 @@
   	<div class="wrapper">
 
   		<div class="container">
+
+        <div class="hidden-panel">
+          <ul></ul>
+        </div>
 
   			<header class="header-sm">
   				<h1 class="hd-reg">Bookeeboo</h1>
@@ -60,9 +66,9 @@
             </button>
   				</div>
 
-          <div class="hidden-panel">
+          <!-- <div class="hidden-panel">
             <ul></ul>
-          </div>
+          </div> -->
 
   				<div class="current-reading">
             <div id="loading-spinner">
