@@ -55,10 +55,11 @@
   }
 
   function rewriteOrederOfUnorderedBooks(list) {
+    $(".unordered-wrapper .empty").remove();
     $(".unordered-books ul").empty();
 
     if(list.length === 0) {
-      $('.unordered-books ul').append(' <li class="empty">Nothing here</li>');
+      $('.unordered-wrapper').append('<p class="empty">Nothing here</p>');
       return;
     }
 

@@ -22,19 +22,32 @@
     },
 
     setNewCurrentBook: function(book) {
-      currentReading = book;
-      showCurrentBookInHtml(currentReading);
-      setNewSliderForNewCurrentBook(currentReading); 
+      if(book) {
+        currentReading = book;
+        existenceOfCurrentBook(true);
+        showCurrentBookInHtml(currentReading);
+        setNewSliderForNewCurrentBook(currentReading); 
+      }
+      else {
+        existenceOfCurrentBook(false);
+      }
     }
   };
 
-  function showCurrentBookInHtml(currentReading) {
-    if (currentReading === undefined) {
-      $('.pages').hide();
-      $('.current-reading').html("<p class='empty'>Use serach at the top of the page to add books to your queue.</p>");
-      return;
+  function existenceOfCurrentBook(arg) {
+    if(arg == true) {
+      $('.pages').show();
+      $('.current-reading p.empty').remove();
     }
+    if(arg == false) {
+      $('.current-reading h3, .current-reading .details p').html('');
+      $('.current-reading .cover').css('background', 'none');
+      $('.pages').hide();
+      $('.current-reading').append("<p class='empty'>Use search th the top of the page o add books to your queue.</p>");
+    }
+  }
 
+  function showCurrentBookInHtml(currentReading) {
     $(".current-reading .cover").css('background', 'url(' + currentReading.imageUrl + ') no-repeat');
     $(".current-reading .cur-header h3").html(currentReading.title + "<span>" + currentReading.pageCount + " pages</span>");
     $(".current-reading .details p").html(currentReading.description ? currentReading.description : "No description");

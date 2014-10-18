@@ -233,19 +233,19 @@ header {
 				height: 50%;
 			}
 		}
-	}
-	.current-reading {
-		position: relative;
-		overflow: hidden;
-		padding: 40px 0 0 30px;
 		#loading-spinner {
 			position: absolute;
-			top: 0;
+			top: 70px;
 			right: 30px;
 			width: 63px;
 
 			visibility: hidden;
 		}
+	}
+	.current-reading {
+		position: relative;
+		overflow: hidden;
+		padding: 40px 0 0 30px;
 		.cover {
 			width: 175px;
 			height: 270px;
@@ -551,8 +551,11 @@ section .empty {
 	@include text(1.7em, 300);
 }
 
-section.unordered-books li.empty {
-	width: 100%;
+.unordered-wrapper .empty {
+	position: absolute;
+	z-index: 200;
+	top: 55px;
+	left: 270px;
 }
 
 footer {
