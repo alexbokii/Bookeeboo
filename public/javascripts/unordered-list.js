@@ -29,11 +29,13 @@
 
   var sortingUnorderedBooks = {
     connectWith: ".connectedSortable",
+    placeholder: "sortable-placeholder",
     start: function( event, ui ) {
       $(".ordered-books").addClass("start-sorting");
     },
     stop: function( event, ui ) {
       $(".ordered-books").removeClass("start-sorting");
+      checkIfUnorderedSectionEmpty();
     }
   };
 
@@ -58,19 +60,22 @@
     $(".unordered-wrapper .empty").remove();
     $(".unordered-books ul").empty();
 
-    if(list.length === 0) {
-      $('.unordered-wrapper').append('<p class="empty">Nothing here</p>');
-      return;
-    }
-
     $(".unordered-books ul").append(list);
     $(".unordered-books ul li h5, .unordered-books ul li .index").hide();
+    checkIfUnorderedSectionEmpty();
   }
 
   function deleteUnorderedBookFromServer(index) {
     $.post('/api/books/delete-from-unordered', {bookId: index}, function() {
       getUnorderedList();
     });
+  }
+
+  function checkIfUnorderedSectionEmpty() {
+    var numberOfItems = $('.unordered-books li').length;
+    if(numberOfItems === 0) {
+      $('.unordered-wrapper').append('<p class="empty">Nothing here</p>');
+    }
   }
 
 })(); // end of main function

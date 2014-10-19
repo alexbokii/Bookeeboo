@@ -39,7 +39,6 @@
     },
     receive: function( event, ui ) {
       var unorderedIds = findUnorderedIds();
-      console.log(unorderedIds);
       $.post('/api/order/unordered', {unordered: unorderedIds});
 
       var orderedIds = findOrderedIds();
@@ -125,7 +124,7 @@
     return orderedIds;
   }
 
-  //Set bg-color and font-coloe for div with index
+  //Set bg-color and font-color for div with index
   function setNewBackground() {
     $(".ordered-books li").each(function() {
       var myImage = $(this).find("img")[0];
@@ -138,7 +137,6 @@
     });
   }
 
-  // setHeight();
   function setTextColor(array, container) {
     var colorNumber = array[0] + array[1] + array[2];
     if (colorNumber > 300) {
