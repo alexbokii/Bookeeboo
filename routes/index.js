@@ -31,14 +31,28 @@ router.post('/', function(req, res) {
     return res.send(500, {error: "Required fields are not present"}); 
   }
 
-  console.log("TYPE: ", type);
   if (type === 'signup') {
-    user.signup(email, password).then(function() {
-      passport.authenticate('local')(req, res, function() {
-        req.flash('isJustRegistered', true);
-        res.redirect('/main');
+    user.exists(email)
+      .then(function(checkResult) {
+        if (parseInt(checkResult.count)) {
+          req.flash('error', "User with such email already exists");
+          res.redirect('/');
+          
+          return Promise.reject("user exists");
+        } else {
+          return user.signup(email, password);
+        }})
+      .then(function() {
+        passport.authenticate('local')(req, res, function() {
+          req.flash('isJustRegistered', true);
+          res.redirect('/main');
+        });
+      })
+      .catch(function(err) {
+        if (err === "user exists") {
+          return;
+        }
       });
-    });
   } else {
     passport.authenticate('local', {failureRedirect: "/", failureFlash: 'Invalid email or password.'})(req, res, function() {
       res.redirect('/main');

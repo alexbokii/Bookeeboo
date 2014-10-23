@@ -23,5 +23,9 @@ user.signup = function(email, password) {
   return knex('users').insert(user);
 }
 
+user.exists = function(email) {
+  return knex('users').where('email', email).count('id').first();
+}
+
 module.exports = user;
 
