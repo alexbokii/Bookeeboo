@@ -24,9 +24,7 @@ $(function() {
   }
 
   function showNumberOfBookInUnordered() {
-    var unorderedLength = $('.unordered-books li').length;
     $('.unordered-books').animate({'height':'55px'}, 300, function() {
-      $('.booksnumber-keeper span').html(unorderedLength);
       $('.booksnumber-keeper, .unordered-line').show();
     });
   }

@@ -3,7 +3,7 @@ var Promise = require('bluebird');
 var router = express.Router();
 var booksSearch = require('../lib/booksSearch');
 var queue = require('../data/queue');
-var book = require('../data/book');
+Var book = require('../data/book');
 var user = require('../data/user');
 var unordered = require('../data/unordered');
 var _ = require('lodash');
@@ -47,7 +47,6 @@ router.post('/', function(req, res) {
 });
 
 router.get('/main', auth, function(req, res) {
-  // console.log("REGISTERED: ", req.flash('isJustRegistered').length == 0);
   res.render('main', {isJustRegistered: req.flash('isJustRegistered').length != 0});
 })
 
