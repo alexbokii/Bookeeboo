@@ -159,7 +159,7 @@
 
   function changeAddButtonsIfUnorderedListIsFull() {
     if(bookeeboo.unorderedBooks.isUnorderedBooksFull()) {
-      $('button.add-book').html('Clear your unordered books before adding new');
+      $('button.add-book:not(.added)').html('Clear your unordered books before adding new');
       $('button.add-book').addClass('not-added');
     }
   }

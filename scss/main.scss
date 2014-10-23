@@ -660,15 +660,15 @@ li.no-result {
 }
 
 button {
-	&.added {
-		border: none;
-		color: #33CC78;
-	}
 	&.not-added {
 		width: 125px;
 		border: none;
 		line-height: 1.5em;
 		color: #CCBE36;
+	}
+	&.added {
+		border: none;
+		color: #33CC78;
 	}
 }
 
@@ -757,7 +757,7 @@ button {
 	cursor: pointer;
 	font-family: inherit;
 	color: $font-color;
-	@include text(0.85em, 200);
+	@include text(0.85em, 500);
 	&.start {
 		margin-top: 50px;
 		margin-bottom: 15px;
