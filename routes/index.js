@@ -31,21 +31,24 @@ router.post('/', function(req, res) {
     return res.send(500, {error: "Required fields are not present"}); 
   }
 
+  console.log("TYPE: ", type);
   if (type === 'signup') {
     user.signup(email, password).then(function() {
       passport.authenticate('local')(req, res, function() {
+        req.flash('isJustRegistered', true);
         res.redirect('/main');
       });
     });
+  } else {
+    passport.authenticate('local', {failureRedirect: "/", failureFlash: 'Invalid email or password.'})(req, res, function() {
+      res.redirect('/main');
+    });
   }
-
-  passport.authenticate('local', {failureRedirect: "/", failureFlash: 'Invalid email or password.'})(req, res, function() {
-    res.redirect('/main');
-  });
 });
 
 router.get('/main', auth, function(req, res) {
-  res.render('main');
+  // console.log("REGISTERED: ", req.flash('isJustRegistered').length == 0);
+  res.render('main', {isJustRegistered: req.flash('isJustRegistered').length != 0});
 })
 
 router.post('/api/books', auth, function(req, res) {

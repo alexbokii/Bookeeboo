@@ -76,6 +76,11 @@
       if (!bookJSON.description) {
         description = "No description";
       }
+    var buttonText = "Add";
+      if(bookeeboo.unorderedBooks.isUnorderedBooksFull()) {
+        buttonText = "Clear your unordered books before adding new";
+        var buttonClass = 'not-added';
+      }
 
       var bookHTML = "<li>"
         + "<div class='book-cover' style='background-image: url(" + bookJSON.imageUrl + ");'></div>"
@@ -83,7 +88,7 @@
         + "<h2>" + bookJSON.title +"</h2>"
         + "<p>" + description +"</p>"
         + "</div>"
-        + "<button class='add-book'>Add</button>"
+        + "<button class='add-book " + buttonClass + "'>" + buttonText + "</button>"
         + "<div style='clear: both'></div>"
         + "<div class='separate-line'></div>"
         + "</li>";
@@ -137,36 +142,26 @@
 
   // add book 
   function addBookToUnordered() {
-    if(isSpaceForBookAveilable()) {
+    if(!bookeeboo.unorderedBooks.isUnorderedBooksFull()) {
       var index = $(this).closest('li').index();
       var book = foundBooks[index];
       markBookAsAdded($(this));
 
-      $.post('/api/books', {book: book}, bookeeboo.unorderedBooks.populateUnorderedListFromServer);
+      $.post('/api/books', {book: book}, function() {
+        bookeeboo.unorderedBooks.populateUnorderedListFromServer(changeAddButtonsIfUnorderedListIsFull);
+      });
     }
-    else {
-      markBookAsCanNotBeAdded($(this));
-    }
-    
   }
 
   function markBookAsAdded(el) {
     el.addClass('added').removeClass('not-added').html('Added');
   }
 
-  function markBookAsCanNotBeAdded(el) {
-    el.addClass('not-added').html('Clear your unordered books fefore adding new');
-  }
-
-  function isSpaceForBookAveilable() {
-    var isAvailable;
-    if($('.unordered-books li').length === 6) {
-      isAvailable = false;
+  function changeAddButtonsIfUnorderedListIsFull() {
+    if(bookeeboo.unorderedBooks.isUnorderedBooksFull()) {
+      $('button.add-book').html('Clear your unordered books before adding new');
+      $('button.add-book').addClass('not-added');
     }
-    else {
-      isAvailable = true;
-    }
-    return isAvailable;
   }
 
   function visibleLoadingSpinner(visible) {

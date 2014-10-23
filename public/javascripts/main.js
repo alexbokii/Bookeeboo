@@ -2,7 +2,7 @@ $(function() {
   // Slide effect iof unordered books section
   $(".booksnumber-keeper, .unordered-line").hide();
 
-  $('.unordered-books button').on('click', function() {
+  $('.unordered-books button:not(.second)').on('click', function() {
     if ($('.unordered-wrapper').hasClass('slided-up')) {
       slideUnorderedListDown();
     }

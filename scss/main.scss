@@ -39,6 +39,7 @@ html {
 }
 
 body {
+	position: relative;
 	height: 100%;
 	font-family: 'Roboto', sans-serif;
 	font-size: 14px;
@@ -197,6 +198,7 @@ header {
 } // end of scope
 
 .panel {
+	position: relative;
 	overflow: hidden;
 	background-color: $bg-section;
 	padding-bottom: 30px;
@@ -231,19 +233,19 @@ header {
 				height: 50%;
 			}
 		}
-	}
-	.current-reading {
-		position: relative;
-		overflow: hidden;
-		padding: 40px 0 0 30px;
 		#loading-spinner {
 			position: absolute;
-			top: 0;
+			top: 70px;
 			right: 30px;
 			width: 63px;
 
 			visibility: hidden;
 		}
+	}
+	.current-reading {
+		position: relative;
+		overflow: hidden;
+		padding: 40px 0 0 30px;
 		.cover {
 			width: 175px;
 			height: 270px;
@@ -280,6 +282,7 @@ header {
 
 .hidden-panel {
 	position: absolute;
+	top: 145px;
 	z-index: 500;
 	width: 1200px;
 	max-height: 100%;
@@ -320,7 +323,7 @@ header {
 		margin-top: 20px;
 		padding: 3px 0;
 		background: none;
-		@include text(0.75em, 300);
+		@include text(0.75em, 400);
 		font-family: inherit;
 		color: #fff;
 		outline: none;
@@ -451,7 +454,7 @@ header {
 	button {
 		position: absolute;
 		left: 575px;
-		z-index: 100;
+		z-index: 10;
 		width: 50px;
 		height: 20px; 
 		border: 1px solid #171920;
@@ -495,9 +498,13 @@ header {
 } // end of unordered-books
 
 .ordered-books {
+	position: relative;
 	padding: 50px;
 	overflow: hidden;
 	background-color: $bg-section;
+	ul {
+		min-height: 50px;
+	}
 	li {
 		position: relative;
 		display: inline-block;
@@ -529,6 +536,26 @@ header {
 			height: 180px;
 		}
 	}
+}
+
+section .empty {
+	display: block;
+	width: 50%;
+	height: 100px;
+	margin: 0 auto;
+	padding: 30px;
+	background: none;
+	float: none;
+	line-height: 1.5em;
+	text-align: center;
+	@include text(1.7em, 300);
+}
+
+.unordered-wrapper .empty {
+	position: absolute;
+	z-index: 200;
+	top: 55px;
+	left: 270px;
 }
 
 footer {
@@ -638,9 +665,121 @@ button {
 		color: #33CC78;
 	}
 	&.not-added {
-		width: 120px;
+		width: 125px;
 		border: none;
 		line-height: 1.5em;
 		color: #CCBE36;
+	}
+}
+
+// styles for tutorial
+.fixed-height {
+	max-height: 100%;
+	overflow: hidden;
+}
+
+.tutorial-background {
+	position: absolute;
+	z-index: 100;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(38, 47, 56, 0.8);
+}
+
+.full-cover {
+	top: 0;
+}
+
+.tutorial {
+	position: absolute;
+	z-index: 1000;
+	display: none;
+	line-height: 1.6em;
+	padding: 13px;
+	h2 {
+		@include text(1.5em, 300);
+		padding: 10px 0;
+		text-align: center;
+	}
+	p {
+		padding: 7px 0;
+		text-align: center;
+		@include text(1.125em, 300);
+	}
+}
+
+.welcome {
+	top: 20%;
+	left: 350px;
+	width: 520px;
+	padding: 30px;
+	border: 6px solid #7D8288;
+	background: $bg-section;
+	p {
+		padding: 15px 0;
+	}
+}
+.readingNow {
+	top: 0px;
+	right: 0px;
+	width: 330px;
+	height: 135px;
+	border: 4px solid #7EC8A1;
+	background: rgba(40, 163, 99, 0.95);
+}
+
+.unorderedBooks {
+	top: 0px;
+	left: 0px;
+	width: 300px;
+	height: 160px;
+	border: 4px solid #F4BBA1;
+	background: rgba(237, 141, 99, 0.95);
+}
+
+.orderedBooks {
+	top: 0px;
+	right: 0px;
+	width: 300px;
+	height: 200px;
+	border: 4px solid #97D3F1;
+	background: #51B6E7;
+}
+
+.tutorial button {
+	display: block;
+	width: 85px;
+	margin: 0 auto;
+	padding: 4px;
+	text-align: center;
+	background: none;
+	outline: none;
+	cursor: pointer;
+	font-family: inherit;
+	color: $font-color;
+	@include text(0.85em, 200);
+	&.start {
+		margin-top: 50px;
+		margin-bottom: 15px;
+		border: 2px solid #7D8288;
+		@include text(0.9em, 300);
+	}
+	&.first {
+		margin-top: 12px;
+		margin-bottom: 12px;
+		border: 2px solid #7EC8A1;
+	}
+	&.second {
+		position: relative;
+		left: 0;
+		height: auto;
+		margin-top: 12px;
+		margin-bottom: 12px;
+		border: 2px solid #F4BBA1;
+	}
+	&.third {
+		margin-top: 12px;
+		margin-bottom: 12px;
+		border: 2px solid #97D3F1;
 	}
 }

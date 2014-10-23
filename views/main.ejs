@@ -15,53 +15,68 @@
     <script src="../javascripts/main.js"></script>
     <script src="../javascripts/common.js"></script>
     <script src="../javascripts/ordered-list.js"></script>
+    <script src="../javascripts/current-book.js"></script>
     <script src="../javascripts/unordered-list.js"></script>
     <script src="../javascripts/search.js"></script>
+    <script src="../javascripts/tutorial.js"></script>
 
     <script>
       $(function() {
         bookeeboo.orderedBooks.init();
         bookeeboo.unorderedBooks.init();
         bookeeboo.search.init();
+        bookeeboo.currentBook.init();
+
+        bookeeboo.isJustRegistered = <%= isJustRegistered %>;
+        if (bookeeboo.isJustRegistered) {
+          bookeeboo.tutorial.start();
+        }
       });
     </script>
     
   </head>
   <body>
 
-    <div class="wrapper">
+  	<div class="wrapper">
 
-      <div class="container">
+  		<div class="container">
 
-  	<header class="header-sm">
-  	  <h1 class="hd-reg">Bookeeboo</h1>
-  	  <a href="#" class="sign-out">Sign Out</a>
-  	</header>
+        <div class="hidden-panel">
+          <ul></ul>
+        </div>
 
-  	<section class="panel">
+  			<header class="header-sm">
+  				<h1 class="hd-reg">Bookeeboo</h1>
+  				<a href="#" class="sign-out">Sign Out</a>
+  			</header>
 
-  	  <div class="search">
-  	    <input type="text" placeholder="Search a book you want to add to our queue" class="input-field">
+  			<section class="panel">
+
+        <!-- hidden tutorial scetion -->
+          <div class="tutorial readingNow">
+            <p>This is the book that you are currently reading.</p>
+            <p>You can track your progress using the yellow slider in the bottom of this section.</p>
+            <button class="first">Next</button>
+          </div>
+
+  				<div class="search">
+  					<input type="text" placeholder="Search a book you want to add to our queue" class="input-field">
             <button id="search-delete">
               <img src="../images/close-search.png">
             </button>
-  	  </div>
-
-          <div class="hidden-panel">
-            <ul></ul>
-          </div>
-
-  				<div class="current-reading">
             <div id="loading-spinner">
               <img src="../images/spinner.gif">
             </div>
+  				</div>
+
+  				<div class="current-reading">
   					<div class="cover"></div>
   					<div class="details">
   					   <div class="mark">You are reading</div>
   					   <header class="cur-header">
-  							 <h3>Nice Book about kitten<span class="num-of-pages"></span></h3>  
+  							 <h3><span class="num-of-pages"></span></h3>  
   					   </header>
-  					   <p>This book is written for cat-lovers. It's about cute and funny citten who escaped from his family. You'll see adventures of clever people who had sold their home to pay for detective who spent all money for one-way ticket to Australia. </p>
+  					   <p></p>
               <!-- slider -->
               <div class="pages">
                 <div class="graded">
@@ -70,8 +85,8 @@
                     <div class="page-counter"></div>   
                   </div>
                   <div class="last-page"></div>
-                </div>
-                
+               </div>
+              
                 <div class="pages-settings">
                   <ul class="minus">
                     <li class="number">1</li>
@@ -83,15 +98,22 @@
                     <li class="operator">+</li>
                     <li class="number">1</li>
                     <li class="number">5</li>
-                    <li class="number">10</li>
+                  <li class="number">10</li>
                   </ul>
                 </div>
               </div> <!-- end of pages class -->
             </div> <!-- end of delails class --> 
           </div> <!-- end of current reading class -->
-  	</section>
+  		  </section>
 
-  	<section class="unordered-books">
+  			<section class="unordered-books">
+          <!-- hidden tutorial section -->
+          <div class="tutorial unorderedBooks">
+            <p>Here we save the books that you added but have not decided their place in your queue.</p>
+            <p>Just drag them to the queue when you are ready.</p>
+            <button class="second">Next</button>
+          </div>
+
           <button class="up"></button>
 
           <div class="booksnumber-keeper">
@@ -99,16 +121,27 @@
           </div>
           <div class="unordered-line"></div>
           <div class="unordered-wrapper">
-  	    <div class="mark">Unordered</div>
-  	    <ul class="connectedSortable"></ul>
+  				  <div class="mark">Unordered</div>
+  				  <ul class="connectedSortable">
+            </ul>
           </div>
 
           <button class="bottom"></button>
-  	</section>
+  			</section>
 
-  	<section class="ordered-books">
-  	  <ul class="connectedSortable"></ul>
-  	</section>
+  			<section class="ordered-books">
+
+          <!-- hidden tutorial section -->
+          <div class="tutorial orderedBooks">
+            <p>This is your reading queue. The first book here is the one that you are reading at the moment.</p>
+            <p>You can change books positions by dragging and dropping item in different places in the queue.</p>
+            <button class="third">Finish</button>
+          </div>
+
+  				<ul class="connectedSortable">
+            
+          </ul>
+  			</section>
 
         <footer>
           <div class="ft-description">
@@ -130,8 +163,16 @@
             </ul>
           </div>
         </footer>
+  		</div>
+  	</div>
 
-      </div>
+    <!-- tutorial -->
+    <div class="tutorial welcome">
+      <h2>Welcome to Bookeeboo</h2>
+      <p>We prefilled your reading queue with books from the top 100 20<sup>th</sup> century books that everyone shoud read by "New Yourk Version".</p>
+      <p>We hope this helps you to build your own reading queue and start tracking you reading progress.</p>
+      <button class="start">Start</button>
     </div>
+
   </body>
 </html>
