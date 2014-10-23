@@ -1,0 +1,785 @@
+$font-color: #E6E6E6;
+$font-pages: #F0B446;
+$bg-base: #171920; //footer, dark black
+$bg-section: #262F38;
+
+@mixin text ($size, $weight) {
+	font-size: $size;
+	font-weight: $weight;
+}
+
+@mixin autowidth {
+	width: intrinsic; //Safari, Webkit
+	width: -moz-max-content;
+	width: -webkit-max-content;
+}
+
+::-webkit-input-placeholder {
+    color: #262F38;
+}
+::-moz-placeholder {
+	color: #262F38;  
+	opacity: 1;
+}
+:-moz-placeholder {
+	color: #262F38;  
+	opacity: 1;
+}
+:-ms-input-placeholder {  
+	color: #262F38;  
+}
+
+* {
+	padding: 0;
+	margin: 0;
+}
+
+html {
+	height: 100%;
+}
+
+body {
+	position: relative;
+	height: 100%;
+	font-family: 'Roboto', sans-serif;
+	font-size: 14px;
+	color: $font-color;
+}
+
+a {
+	text-decoration: none;
+	color: $font-color;
+}
+
+.input-field {
+	width: 100%;
+	height: 2.5em;
+	box-sizing: border-box;
+	padding-left: 20px;
+	margin-top: 15px;
+	background-color: #C2C8CE;
+	border: 1px solid #4D6985;
+	border-radius: 5px;
+	color: #262F38;
+	outline: none;
+}
+
+.wrapper {
+	min-height: 100%;
+	background-image: -webkit-linear-gradient(top, #52596C, #121124);
+}
+
+.container {
+	width: 1200px;
+	margin: 0 auto;
+}
+
+.opacity {
+	background-color: rgba(27, 23, 23, 0.5);
+	padding: 0 50px 30px 50px;
+}
+
+header {
+	overflow: hidden;
+	&.landing-header {
+		background: url(../images/background.jpg);
+	}
+	&.header-sm {
+		padding: 10px 30px;
+		background: $bg-base;
+		a {
+			@include text(1em, 300);
+			line-height: 32px;
+		}
+	}
+	h1 {
+		color: $font-color;
+		text-transform: uppercase;
+		font-style: italic;
+		&.landing {
+			@include text(3.75em, 400);
+		}
+		&.hd-reg {
+			@include text(1.5em, 400);
+			width: 50%;
+			float: left;
+		}
+	}
+	.sign-out {
+		width: 50%;
+		float: left;
+		color: $font-color;
+		text-align: right;
+		a {
+			@include text(1.1em, 300);
+		}
+	}
+	p {
+		color: $font-color;
+		width: 30%;
+		line-height: 1.2em;
+		padding: 10px 0;
+		@include text(1.125em, 300);
+	}
+	form {
+		width: 30%;
+		padding-top: 30px;
+		overflow: hidden;
+		h3 {
+			text-align: left;
+			border-bottom: 1px solid $font-color;
+			color: $font-color;
+			line-height: 2em;
+			@include text(1.125em, 300);
+		}
+		input {
+			&:last-of-type {
+				margin-top: 30px;
+			}
+		}
+		.buttons-container {
+			padding-top: 20px;
+			button {
+				width: 25%;
+				padding: 4px;
+				@include text(0.7em, 300);
+				&:first-of-type{
+					float: left;
+					background-color: #EA614F;
+					border: 2px solid #F2A095;
+
+				}
+				&:last-of-type {
+					float: right;
+					background-color: #28A363;
+					border: 2px solid #7ECBA1;
+				}
+			} // end of button
+		} // end of buttons-container
+	} // end of form
+} // end of header
+
+#scope {
+	background: url(../images/landing-books.png) no-repeat left center;
+	background-size: auto 100%;
+	background-origin: content-box;
+	overflow: hidden;
+	padding: 20px 50px 20px 50px;
+	background-color: $bg-section;
+	ul {
+		width: 30%;
+		float: right;
+		color: $font-color;
+		li {
+			line-height: 1.2em;
+			padding: 10px 0;
+			list-style: none;
+			padding-left: 30px;
+			background-size: 10px;
+			@include text(1em, 300);
+			&:nth-child(1) {
+				background: url(../images/circle-red.png) no-repeat left center;
+				background-size: 12px;
+			}
+			&:nth-child(2) {
+				background: url(../images/circle-blue.png) no-repeat left center;
+				background-size: 12px;
+			}
+			&:nth-child(3) {
+				background: url(../images/circle-yellow.png) no-repeat left center;
+				background-size: 12px;
+			}
+			&:nth-child(4) {
+				background: url(../images/circle-green.png) no-repeat left center;
+				background-size: 12px;
+			}
+		} // end of li
+	} // end of ul
+} // end of scope
+
+.panel {
+	position: relative;
+	overflow: hidden;
+	background-color: $bg-section;
+	padding-bottom: 30px;
+	.search {
+		position: relative;
+		padding: 10px 30px;
+		input {
+			height: 40px;
+			width: 1140px;
+			border: 2px solid #4D6985;
+			padding-left: 35px;
+			background-image: url(../images/icon-looking.png);
+			background-repeat: no-repeat;
+			background-position: 10px center;
+			background-size: 20px 20px;
+			@include text(0.8em, 300);
+		}
+		button#search-delete { 
+			width: 40px;
+			line-height: 44px;
+			position: absolute;
+			right: 30px;
+			top: 23px;
+			border: none;
+			background: none;
+			color: #DF5D45;
+			cursor: pointer;
+			outline: none;
+			@include text(1.8em, 300);
+			img {
+				width: 50%;
+				height: 50%;
+			}
+		}
+		#loading-spinner {
+			position: absolute;
+			top: 70px;
+			right: 30px;
+			width: 63px;
+
+			visibility: hidden;
+		}
+	}
+	.current-reading {
+		position: relative;
+		overflow: hidden;
+		padding: 40px 0 0 30px;
+		.cover {
+			width: 175px;
+			height: 270px;
+			float: left;
+			background-size: 100% 100% !important;
+			background-repeat: no-repeat;
+			background-position: top center;
+		}
+		.details {
+			width: 85%;
+			float: left;
+			padding-left: 30px;
+			font-weight: 300;
+			box-sizing: border-box;
+			.cur-header {
+				position: relative;
+				h3 {
+					float: left;
+					@include text(1.5em, 300);
+					span {
+						bottom: 2px;
+						margin-left: 20px;
+						@include text(0.575em, 300);
+					}
+				}
+			}
+			p {
+				padding: 30px 30px 0 0;
+				text-align: justify;
+			}
+		}
+	}
+}
+
+.hidden-panel {
+	position: absolute;
+	top: 145px;
+	z-index: 500;
+	width: 1200px;
+	max-height: 100%;
+	overflow: auto;
+	background: rgba(81, 89, 96, 0.95);
+	li {
+		display: block;
+		overflow: hidden;
+		padding: 30px 30px 0 30px;
+	}
+	.book-cover {
+		display: block;
+		width: 130px;
+		height: 180px;
+		float: left;
+		background-size: 100% 100%;
+		background-repeat: no-repeat;
+	}
+	.book-description {
+		overflow: hidden;
+		width: 1000px;
+		float: left;
+		box-sizing: border-box;
+		padding-left: 30px;
+		h2 {
+			@include text(1.5em, 300);
+		}
+		p {
+			@include text(1em, 300);
+			padding-top: 20px;
+			line-height: 1.4em;
+		}
+	}
+	button {
+		width: 80px;
+		float: right;
+		border: 2px solid #7D8288;
+		margin-top: 20px;
+		padding: 3px 0;
+		background: none;
+		@include text(0.75em, 400);
+		font-family: inherit;
+		color: #fff;
+		outline: none;
+	}
+	.separate-line {
+		width: 1150px;
+		height: 2px;
+		margin: 0 auto;
+		margin-top: 30px;
+		background-color: #3D4348;
+		// margin: 20px 0;
+	}
+}
+
+.mark {
+	position: relative;
+	right: 0px;
+	width: 100px;
+	float: right;
+	padding: 4px 20px;
+	background-color: #DF5D45;
+	@include text(0.875em, 300);
+	.unordered-books & {
+		width: 70px;
+		float: left;
+		left: 0;
+	}
+}
+
+//slider
+.graded {
+	color: #F0B446;
+	padding-top: 40px;
+	@include text(0.875em, 300);
+	.first-page {
+		width: 40px;
+		float: left;
+		text-align: center;
+	}
+	.last-page {
+		float: left;
+		text-align: center;
+		width: 58px;
+	}
+	.slider {
+		width: 850px;
+		height: 6px;
+		float: left;
+		border-radius: 5px;
+		background: #515960;
+		border: none;
+		position: relative;
+		.page-counter {
+			position: absolute;
+			top: -25px;
+			width: 40px;
+			margin-left: -20px;
+			text-align: center;
+			color: #F0B446;
+		}
+	}
+	.ui-slider-handle {
+		background: url(../images/Handler.png) no-repeat;
+		position: absolute;
+		border: none;
+		width: 15px;
+		height: 30px;
+		outline: none;
+		top: 20px;
+	}
+}
+.pages-settings {
+	width: 100%;
+	box-sizing: border-box;
+	overflow: hidden;
+	padding: 40px 30px 0 0;
+	.minus {
+		width: 100px;
+		float: left;
+	}
+	.plus {
+		width: 100px;
+		float: right;
+	}
+	ul li {
+		width: 14px;
+		height: 14px;
+		display: inline-block;
+		margin: 0 2px;
+		border: 2px solid #7D8288;
+		list-style: none;
+		text-align: center;
+		color: #F0B446;
+		@include text(0.625em, 300);
+	}
+	li.operator {
+		border: none;
+		font-size: 0.8em;
+	}
+	li.number:hover {
+		cursor: pointer;
+	}
+}
+
+.unordered-books { 
+	background-color: $bg-section;
+	position: relative;
+	.unordered-line {
+		width: 100%;
+		height: 2px;
+		background-color: $bg-base;
+		border-bottom: 1px solid #747579;
+	}
+	.booksnumber-keeper {
+		width: 100px;
+		margin: 0 auto;
+		background-color: $bg-section;
+		text-align: center;	
+		color: #F0B446;
+		-webkit-transform: translate(0%, 50%);
+		span {
+			@include text(1.5em, 300);
+		}
+	}
+	&.hidden-height {
+		height: 65px;
+	}
+	button {
+		position: absolute;
+		left: 575px;
+		z-index: 10;
+		width: 50px;
+		height: 20px; 
+		border: 1px solid #171920;
+		background-repeat: no-repeat;
+		background-position: center center; 
+		background-size: 10px 10px;
+		outline: none;
+		cursor: pointer;
+	}
+		.up {
+			background-image: url(../images/icon-unordered-up.png);
+			top: -10px;
+		}
+		.bottom {
+			background-image: url(../images/icon-unordered-bottom.png);
+			bottom: -10px;
+		}
+	.unordered-wrapper {
+		background-color: $bg-base;
+	}
+	ul {
+		@include autowidth;
+		height: 150px;
+		margin: 0 auto;
+		padding: 40px 70px;
+		white-space: nowrap;
+		li {
+			position: relative;
+			list-style: none;
+			display: inline-block;
+			height: 150px;
+			width: auto;
+			padding: 0 20px;
+			img {
+				height: 150px;
+				width: auto;
+				max-width: 145px;
+			}
+		} // end of ul
+	} // end of unordered-wrapper
+} // end of unordered-books
+
+.ordered-books {
+	position: relative;
+	padding: 50px;
+	overflow: hidden;
+	background-color: $bg-section;
+	ul {
+		min-height: 50px;
+	}
+	li {
+		position: relative;
+		display: inline-block;
+		width: 150px;
+		margin: 10px 35px;
+		height: 260px;
+		overflow: hidden;
+		padding-top: 10px;
+		text-align: center;
+		background-color: #515960;
+		h5 {
+			height: 40px;
+			box-sizing: border-box;
+			color: #fff;
+			margin: 5px 10px 10px 10px;
+			@include text(0.755em, 300);
+		}
+		.index {
+			position: absolute;
+			width: 100%;
+			bottom: 0;
+			height: 10px;
+			line-height: 10px;
+			padding: 2px 0;
+			@include text(0.675em, 300);
+		}
+		img {
+			width: 130px;
+			height: 180px;
+		}
+	}
+}
+
+section .empty {
+	display: block;
+	width: 50%;
+	height: 100px;
+	margin: 0 auto;
+	padding: 30px;
+	background: none;
+	float: none;
+	line-height: 1.5em;
+	text-align: center;
+	@include text(1.7em, 300);
+}
+
+.unordered-wrapper .empty {
+	position: absolute;
+	z-index: 200;
+	top: 55px;
+	left: 270px;
+}
+
+footer {
+	background-color: $bg-base;
+	padding: 20px 50px;
+	overflow: hidden;
+	color: $font-color;
+	
+    .ft-description {
+		float: left;
+		width: 50%;
+		text-align: left;
+		p {
+			width: 50%;
+			padding-top: 20px;
+			line-height: 1.1em;
+			@include text(0.75em, 300);
+		}
+		&:first-of-type {
+			padding-top: 0;
+		}
+	}
+	.social {
+		float: right;
+		width: 180px;
+		text-align: right;
+		ul {
+			padding: 10px 0;
+			overflow: hidden;
+			li {
+				display: block;
+				float: left;
+				width: auto;
+				height: 30px;
+				padding: 0 5px;
+			}
+			h4 {
+				display: inline;
+				line-height: 30px;
+				@include text(0.8em, 300);
+			}
+		}
+		img {
+			width: 30px;
+			height: 30px;
+		}
+	}
+}
+
+// Dynamic selectors 
+div.colorWh {
+	color: #fff;
+}
+
+div.colorBl {
+	color: #000;
+}
+
+.start-sorting {
+	background-color: #384651;
+	-webkit-transition: all 0.2s ease-out;
+}
+
+.sortable-placeholder {
+	border: 1px dashed #666;
+	box-sizing: border-box;
+}
+
+.sorting-delete {
+	position: absolute;
+	z-index: 1000;
+	top: 5px;
+	right: 5px;
+	overflow: hidden;
+	width: 22px;
+	height: 22px;
+	text-align: center;
+	background-image: url(../images/delete-book.png);
+	background-size: cover;
+	// background-color: rgba(192, 61, 69, 0.7);
+	@include text(1.5em, 300);
+	&:hover {
+		cursor: pointer;
+	}
+}
+
+.unordered-books .sorting-delete {
+	right: 25px;
+}
+
+.add-book {
+	outline: none;
+}
+
+li.no-result {
+	width: 320px;
+	margin: 0 auto;
+	padding-bottom: 30px;
+	p {
+		@include text(1.5em, 300);
+	}
+}
+
+button {
+	&.added {
+		border: none;
+		color: #33CC78;
+	}
+	&.not-added {
+		width: 125px;
+		border: none;
+		line-height: 1.5em;
+		color: #CCBE36;
+	}
+}
+
+// styles for tutorial
+.fixed-height {
+	max-height: 100%;
+	overflow: hidden;
+}
+
+.tutorial-background {
+	position: absolute;
+	z-index: 100;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(38, 47, 56, 0.8);
+}
+
+.full-cover {
+	top: 0;
+}
+
+.tutorial {
+	position: absolute;
+	z-index: 1000;
+	display: none;
+	line-height: 1.6em;
+	padding: 13px;
+	h2 {
+		@include text(1.5em, 300);
+		padding: 10px 0;
+		text-align: center;
+	}
+	p {
+		padding: 7px 0;
+		text-align: center;
+		@include text(1.125em, 300);
+	}
+}
+
+.welcome {
+	top: 20%;
+	left: 350px;
+	width: 520px;
+	padding: 30px;
+	border: 6px solid #7D8288;
+	background: $bg-section;
+	p {
+		padding: 15px 0;
+	}
+}
+.readingNow {
+	top: 0px;
+	right: 0px;
+	width: 330px;
+	height: 135px;
+	border: 4px solid #7EC8A1;
+	background: rgba(40, 163, 99, 0.95);
+}
+
+.unorderedBooks {
+	top: 0px;
+	left: 0px;
+	width: 300px;
+	height: 160px;
+	border: 4px solid #F4BBA1;
+	background: rgba(237, 141, 99, 0.95);
+}
+
+.orderedBooks {
+	top: 0px;
+	right: 0px;
+	width: 300px;
+	height: 200px;
+	border: 4px solid #97D3F1;
+	background: #51B6E7;
+}
+
+.tutorial button {
+	display: block;
+	width: 85px;
+	margin: 0 auto;
+	padding: 4px;
+	text-align: center;
+	background: none;
+	outline: none;
+	cursor: pointer;
+	font-family: inherit;
+	color: $font-color;
+	@include text(0.85em, 200);
+	&.start {
+		margin-top: 50px;
+		margin-bottom: 15px;
+		border: 2px solid #7D8288;
+		@include text(0.9em, 300);
+	}
+	&.first {
+		margin-top: 12px;
+		margin-bottom: 12px;
+		border: 2px solid #7EC8A1;
+	}
+	&.second {
+		position: relative;
+		left: 0;
+		height: auto;
+		margin-top: 12px;
+		margin-bottom: 12px;
+		border: 2px solid #F4BBA1;
+	}
+	&.third {
+		margin-top: 12px;
+		margin-bottom: 12px;
+		border: 2px solid #97D3F1;
+	}
+}
