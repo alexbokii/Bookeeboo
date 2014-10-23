@@ -1,9 +1,7 @@
   (function() {
   var orderedBooksArray = [];
-  // var currentBook;
 
   var orderedBooks = bookeeboo.orderedBooks = {
-    //initialise
     init: function() {
       getQueue(redrawOrderedListInHtml);
 
@@ -34,7 +32,7 @@
     stop: function( event, ui ) {
       $(".ordered-books").removeClass("start-sorting");
       var orderedIds = findOrderedIds();
-      postChangesInOrderedBooks(orderedIds);
+      sendNewOrderToServer(orderedIds);
       updateOrderedBooksIndexes();  
     },
     receive: function( event, ui ) {
@@ -75,7 +73,7 @@
     rewriteOrderOfOrderedBooks(htmlOrdered);
   }
 
-  function postChangesInOrderedBooks(orderedIds) {
+  function sendNewOrderToServer(orderedIds) {
     $.post('/api/order/queue', {queue: orderedIds}, getQueue);
   }
 
