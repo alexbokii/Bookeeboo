@@ -46,6 +46,11 @@ router.post('/', function(req, res) {
   }
 });
 
+router.get('/signout', auth, function(req, res) {
+  req.logout();
+  res.redirect('/');
+});
+
 router.get('/main', auth, function(req, res) {
   res.render('main', {isJustRegistered: req.flash('isJustRegistered').length != 0});
 })
