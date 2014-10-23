@@ -35,6 +35,7 @@
     },
     stop: function( event, ui ) {
       $(".ordered-books").removeClass("start-sorting");
+      updateNumberOfUnorderedBooks();
       checkIfUnorderedSectionEmpty();
     }
   };
@@ -56,12 +57,20 @@
     });
   }
 
+  function updateNumberOfUnorderedBooks() {
+    var unorderedLength = $('.unordered-books li').length;
+    $('.booksnumber-keeper span').html(unorderedLength);
+  }
+
   function rewriteOrederOfUnorderedBooks(list) {
     $(".unordered-wrapper .empty").remove();
     $(".unordered-books ul").empty();
 
     $(".unordered-books ul").append(list);
     $(".unordered-books ul li h5, .unordered-books ul li .index").hide();
+
+    updateNumberOfUnorderedBooks();
+
     checkIfUnorderedSectionEmpty();
   }
 
