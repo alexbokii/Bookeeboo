@@ -79,7 +79,7 @@
     var buttonText = "Add";
       if(bookeeboo.unorderedBooks.isUnorderedBooksFull()) {
         buttonText = "Clear your unordered books before adding new";
-        var buttonClass = 'not-added';
+        var buttonClass = 'canNotBeAdded';
       }
 
       var bookHTML = "<li>"
@@ -154,13 +154,13 @@
   }
 
   function markBookAsAdded(el) {
-    el.addClass('added').removeClass('not-added').html('Added');
+    el.addClass('added').removeClass('canNotBeAdded').html('Added');
   }
 
   function changeAddButtonsIfUnorderedListIsFull() {
     if(bookeeboo.unorderedBooks.isUnorderedBooksFull()) {
       $('button.add-book:not(.added)').html('Clear your unordered books before adding new');
-      $('button.add-book').addClass('not-added');
+      $('button.add-book').addClass('canNotBeAdded');
     }
   }
 
