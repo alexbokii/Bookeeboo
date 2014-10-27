@@ -88,7 +88,6 @@
     $(".ordered-books p.empty").remove();
 
     if(list.length === 0) {
-      console.log("Ordered-books are empty");
       $(".ordered-books").append('<p class="empty">Nothing in your reading queue. Add your books and start reading.</p> ');
       return;
     }
