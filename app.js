@@ -9,6 +9,10 @@ var knex = require('./data');
 var bootstrap = require('./data/bootstrap');
 var testData = require('./data/testData');
 var routes = require('./routes/index');
+var setupPassport = require('./setupPassport.js');
+var passport = require('passport');
+var session = require('express-session');
+var flash = require('connect-flash');
 
 global.knex = knex;
 
@@ -25,7 +29,14 @@ app.use(bodyParser.urlencoded());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(session({ secret: 'bookeeboosecretkey' }));
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(flash());
+
 app.use('/', routes);
+
+setupPassport();
 
 /// catch 404 and forward to error handler
 app.use(function(req, res, next) {

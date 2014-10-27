@@ -7,11 +7,11 @@
         range: "min",
         min: 1,
         slide: function( event, ui ) {
-        $(".page-counter").show();
-        $(".page-counter").text(ui.value);
-        currentReading.currentPage = ui.value;
+          $(".page-counter").show();
+          $(".page-counter").text(ui.value);
+          currentReading.currentPage = ui.value;
 
-        $.post('/api/books/page', {bookId: currentReading.id, page: ui.value}); //send to server
+          $.post('/api/books/page', {bookId: currentReading.id, page: ui.value}); //send to server
           updatePageCounterPosition();
         }
       });

@@ -3,7 +3,30 @@
   <head>
     <title>Bookeeboo</title>
     <link rel="stylesheet" type="text/css" href="stylesheets/main.css">
-    <link href='http://fonts.googleapis.com/css?family=Roboto:400,700italic,900italic,900,700,500,500italic,300,100,400italic,100italic,300italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Roboto:400,700italic,900italic,900,700,500,500italic,300,100,400italic,100italic,300italic'
+          rel='stylesheet' type='text/css'>
+    
+    <script src="../javascripts/thirdparty/jquery-ui/external/jquery/jquery.js"></script>
+    <script>
+     $(function() {
+       $('.signin').click(function() {
+         $('.submit-type').val('signin');
+       });
+       
+       $('.signup').click(function() {
+         $('.submit-type').val('signup');
+       });
+     
+       $(".input-field").keypress(function(event) {
+         if (event.which == 13) {
+           event.preventDefault();
+           
+           $('.submit-type').val('signin');
+           $("#sign").submit();
+         }
+       });
+     })
+    </script>
   </head>
   <body>
 
@@ -18,13 +41,15 @@
               <p>Our small web application helps you to create you own reading queue.</p>
               <p>Stop forgetting what you wanted to read and in what order. Use bookeeboo.</p>
             </div>
-            <form id="sign">
+            <form id="sign" action="/" method="POST">
               <h3>Sign In or Sign Up</h3>
-              <input type="email" placeholder="Email" class="input-field" required>
-              <input type="password" placeholder="Password" class="input-field" required>
+              <input name="email" type="email" placeholder="Email" class="input-field" required>
+              <input name="password" type="password" placeholder="Password" class="input-field" required>
+              <input class='submit-type' type="hidden" name="type" value="signin" />
+              <% if (error) { %> <p><%= error %></p> <% } %>
               <div class="buttons-container">
-                <button><a href="">Sign Up</a></button>
-                <button><a href="main/">Sign In</a></button>
+                <button class="signup">Sign Up</button>
+                <button class="signin">Sign In</button>
               </div>
             </form>
           </div>
