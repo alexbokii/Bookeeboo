@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 var Promise = require('bluebird');
 var knex = require('./data');
 var bootstrap = require('./data/bootstrap');
+var newUserBooks = require('./data/newUserBooks');
 var testData = require('./data/testData');
 var routes = require('./routes/index');
 var setupPassport = require('./setupPassport.js');
@@ -73,6 +74,8 @@ bootstrap.createTablesIfMissing().then(function(result) {
   if (result.length === 0) {
     return;
   }
+  
+  newUserBooks.init();
 
   return testData.createTestUser().then(function(results) {
     var userId = results[0];

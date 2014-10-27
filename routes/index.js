@@ -6,6 +6,7 @@ var queue = require('../data/queue');
 var book = require('../data/book');
 var user = require('../data/user');
 var unordered = require('../data/unordered');
+var newUserBooks = require('../data/newUserBooks');
 var _ = require('lodash');
 var passport = require('passport');
 var passwordHash = require('password-hash');
@@ -46,6 +47,9 @@ router.post('/', function(req, res) {
         } else {
           return user.signup(email, password);
         }})
+      .then(function(userId) {
+        return newUserBooks.copyDefaultBooksToUser(userId[0], 4, 10)
+      })
       .then(function() {
         passport.authenticate('local')(req, res, function() {
           req.flash('isJustRegistered', true);

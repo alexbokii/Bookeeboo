@@ -20,7 +20,7 @@ user.signup = function(email, password) {
     queueOrder: ""
   };
 
-  return knex('users').insert(user);
+  return knex('users').returning('id').insert(user);
 }
 
 user.exists = function(email) {

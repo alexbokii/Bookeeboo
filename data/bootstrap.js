@@ -3,7 +3,8 @@ var Promise = require('bluebird');
 
 var tables = [
   'users',
-  'books'
+  'books',
+  'defaultBooks'
 ];
 
 var definitions = {
@@ -17,14 +18,23 @@ var definitions = {
 
   'books': function(table) {
     table.increments('id').primary();
-    table.integer('userId').references('id').inTable('users');
+    table.integer('userId').references('id').inTable('users').notNullable();
     table.string('title').notNullable();
     table.string('author');
     table.integer('pageCount');
     table.string('imageUrl');
     table.text('description');
     table.integer('currentPage').notNullable().defaultTo(0);
-  }
+  }, 
+  
+  'defaultBooks': function(table) {
+    table.increments('id').primary();
+    table.string('title').notNullable();
+    table.string('author');
+    table.integer('pageCount');
+    table.string('imageUrl');
+    table.text('description');
+  } 
 };
 
 bootstrap.createTablesIfMissing = function() {

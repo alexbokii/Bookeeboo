@@ -2,7 +2,7 @@ var book = {};
 var downloadImage = require('../lib/utils/downloadImage'),
     _ = require('lodash');
 
-book.save = function(book) {
+book.save = function(book, isDefault) {
   var coverImageName = _.last(book.imageUrl.split('/')).replace('%', '');
   var localPath = 'public/images/covers/' + coverImageName;
   var savePath = '/images/covers/' + coverImageName;
@@ -11,9 +11,14 @@ book.save = function(book) {
   .then(function() {
     book.imageUrl = savePath;
 
-    return knex('books').returning('id').insert(book);
+    var table = isDefault ? 'defaultBooks' : 'books';
+    return knex(table).returning('id').insert(book);
   });
 };
+
+book.resaveFromDefault = function(defaultBook) {
+  return knex('books').returning('id').insert(defaultBook);
+}
 
 book.updateCurrentPage = function(bookId, currentPage) {
   return knex('books').where('id', bookId).update({
@@ -21,8 +26,9 @@ book.updateCurrentPage = function(bookId, currentPage) {
   });
 };
 
-book.get = function(bookId) {
-  return knex('books').where('id', bookId);
+book.get = function(bookId, isDefault) {
+  var table = isDefault ? 'defaultBooks' : 'books';
+  return knex(table).where('id', bookId);
 };
 
 book.delete = function(bookId) {
