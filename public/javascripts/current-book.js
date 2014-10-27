@@ -6,48 +6,47 @@
       $(".slider").slider({
         range: "min",
         min: 1,
-        slide: function( event, ui ) {
-          $(".page-counter").show();
-          $(".page-counter").text(ui.value);
-          currentReading.currentPage = ui.value;
-
-          $.post('/api/books/page', {bookId: currentReading.id, page: ui.value}); //send to server
-          updatePageCounterPosition();
-        }
+        slide: onSlide
       });
 
       $("li.number").on("click", function() {
-        calculateNewCurrentPage($(this));
+        var newPage = calculateNewCurrentPage($(this));
+        updateCurrentPage(newPage);
       });
     },
 
     setNewCurrentBook: function(book) {
       if(book) {
         currentReading = book;
-        existenceOfCurrentBook(true);
         showCurrentBookInHtml(currentReading);
         setNewSliderForNewCurrentBook(currentReading); 
       }
       else {
-        existenceOfCurrentBook(false);
+        showCurrentBookSectionWhenCurrentBookIsMissing();
       }
     }
   };
 
-  function existenceOfCurrentBook(arg) {
-    if(arg == true) {
-      $('.pages').show();
-      $('.current-reading p.empty').remove();
-    }
-    if(arg == false) {
-      $('.current-reading h3, .current-reading .details p').html('');
-      $('.current-reading .cover').css('background', 'none');
-      $('.pages').hide();
-      $('.current-reading').append("<p class='empty'>Use search th the top of the page o add books to your queue.</p>");
-    }
+  function onSlide(event, ui) {
+    $(".page-counter").show();
+    $(".page-counter").text(ui.value);
+    
+    currentReading.currentPage = ui.value;
+
+    $.post('/api/books/page', {bookId: currentReading.id, page: ui.value}); //send to server
+    updatePageCounterPosition(currentReading);
+  }
+
+  function showCurrentBookSectionWhenCurrentBookIsMissing() {
+    $('.current-reading h3, .current-reading .details p').html('');
+    $('.current-reading .cover').css('background', 'none');
+    $('.pages').hide();
+    $('.current-reading').append("<p class='empty'>Use search th the top of the page o add books to your queue.</p>");
   }
 
   function showCurrentBookInHtml(currentReading) {
+    $('.pages').show();
+    $('.current-reading p.empty').remove();
     $(".current-reading .cover").css('background', 'url(' + currentReading.imageUrl + ') no-repeat');
     $(".current-reading .cur-header h3").html(currentReading.title + "<span>" + currentReading.pageCount + " pages</span>");
     $(".current-reading .details p").html(currentReading.description ? currentReading.description : "No description");
@@ -56,7 +55,7 @@
 
   function setNewSliderForNewCurrentBook(currentReading) {
     updateSliderInfo({max: currentReading.pageCount, val: currentReading.currentPage});
-    updatePageCounterPosition();
+    updatePageCounterPosition(currentReading);
   }
 
   function updateSliderInfo (params) {
@@ -64,7 +63,7 @@
     $('.slider').slider('value', params.val);
   }
 
-  function updatePageCounterPosition() {
+  function updatePageCounterPosition(currentReading) {
     if (currentReading.currentPage <= 0) {
       $(".page-counter").html("");
     }
@@ -84,17 +83,17 @@
     if (operator.hasClass("minus")) {
       result = currentReading.currentPage - changingNumber;
       if (result <= 0) {
-        return;
+        result = 1;
       }
     }
     else if (operator.hasClass("plus")) {
       result = currentReading.currentPage + changingNumber;
       if (result > currentReading.pageCount) {
-        return;
+        result = currentReading.pageCount;
       }
     }
   
-    updateCurrentPage(result);
+    return result;
   }
 
   function updateCurrentPage(newPage) {
@@ -102,7 +101,7 @@
 
     updateSliderInfo({max: currentReading.pageCount, val: currentReading.currentPage});
 
-    updatePageCounterPosition();
+    updatePageCounterPosition(currentReading);
 
     $.post('/api/books/page', {bookId: currentReading.id, page: currentReading.currentPage});
   }
