@@ -6,7 +6,8 @@
       $(".slider").slider({
         range: "min",
         min: 1,
-        slide: onSlide
+        slide: onSlide,
+        stop: function() { updatePageCounterPosition(currentReading); }
       });
 
       $("li.number").on("click", function() {
@@ -69,7 +70,7 @@
     }
     else {
       $(".page-counter").html(currentReading.currentPage);
-      var sliderPosition = parseFloat($(".ui-slider-handle").css('left'));
+      var sliderPosition = parseFloat($("span.ui-slider-handle").css('left'));
       $(".page-counter").css({"left": ""+ sliderPosition + "px"});
     }
   }
