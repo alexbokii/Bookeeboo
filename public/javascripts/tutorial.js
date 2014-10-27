@@ -11,9 +11,7 @@
 
       $('.unorderedBooks').on('click', 'button', showOrderedBooksTutorial);
 
-      $('.orderedBooks').on('click', 'button', function() {
-        finishTutorial();
-      });
+      $('.orderedBooks').on('click', 'button', finishTutorial);
     }
   };
 

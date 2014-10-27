@@ -1,18 +1,15 @@
 var common = bookeeboo.common = {
-  currentBook: {},
   buildBookHtml: function(array) {
-    var index = 0;
-    var htlmList = [];
+    var htmlList = [];
     for (var i = 0; i < array.length; i++) {
       var htmlListItem = ("<li>"
         + "<input type='hidden' value='" + array[i].id + "' />"
         + "<img src='" + array[i].imageUrl + "'/>"
         + "<h5>" + array[i].title + "</h5>"
-        + "<div class='index'>" + (index+1) + "</div>"
+        + "<div class='index'>" + (i + 1) + "</div>"
         + "</li>");
-      htlmList.push(htmlListItem);
-      index++;
+      htmlList.push(htmlListItem);
     } // end of for
-    return htlmList;
+    return htmlList;
   }
 }

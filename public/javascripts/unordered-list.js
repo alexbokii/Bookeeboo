@@ -3,7 +3,7 @@
 
   var unorderedBooks = bookeeboo.unorderedBooks = {
     init: function() {
-      getUnorderedList();
+      receiveUnorderedListFromServer();
 
       $(".unordered-books").on({
         mouseenter: function() {$(this).append("<div class='sorting-delete'></div>");},
@@ -13,17 +13,30 @@
       $('.unordered-books').on('click', '.sorting-delete', function() {
         var el = $(this).closest('li');
         var id = el.find('input').val();
-        deleteUnorderedBookFromServer(id);
+        deleteUnorderedBookFromServer(id, receiveUnorderedListFromServer);
       });
 
       $( ".unordered-books ul" ).sortable(sortingUnorderedBooks).disableSelection();
     },
 
-    populateUnorderedListFromServer: getUnorderedList,
+    populateUnorderedListFromServer: receiveUnorderedListFromServer,
 
     isUnorderedBooksFull: function() {
-      var isFull = $('.unordered-books li').length === 6;
-      return isFull;
+      return $('.unordered-books li').length === 6;
+    },
+
+    findUnorderedIds: function() {
+      unorderedIds = [];
+
+      $(".unordered-books li").each(function() {
+        var value = $(this).find('input').val();
+        unorderedIds.push(parseInt(value));
+      });
+      return unorderedIds;
+    },
+
+    sendUnorderedIdsOrderToServer: function(unorderedIds) {
+      $.post('/api/order/unordered', {unordered: unorderedIds});
     }
   };
 
@@ -36,11 +49,11 @@
     stop: function( event, ui ) {
       $(".ordered-books").removeClass("start-sorting");
       updateNumberOfUnorderedBooks();
-      checkIfUnorderedSectionEmpty();
+      showPlaceholderIfSectionIsEmpty();
     }
   };
 
-  function getUnorderedList(callback) {
+  function receiveUnorderedListFromServer(callback) {
     $.ajax('/api/books/unordered', {
       success: function(response) {
         unorderedBooksArray = response;
@@ -62,25 +75,23 @@
     $('.booksnumber-keeper span').html(unorderedLength);
   }
 
-  function rewriteOrederOfUnorderedBooks(list) {
+  function rewriteOrederOfUnorderedBooks(htmlList) {
     $(".unordered-wrapper .empty").remove();
     $(".unordered-books ul").empty();
 
-    $(".unordered-books ul").append(list);
+    $(".unordered-books ul").append(htmlList);
     $(".unordered-books ul li h5, .unordered-books ul li .index").hide();
 
     updateNumberOfUnorderedBooks();
 
-    checkIfUnorderedSectionEmpty();
+    showPlaceholderIfSectionIsEmpty();
   }
 
-  function deleteUnorderedBookFromServer(index) {
-    $.post('/api/books/delete-from-unordered', {bookId: index}, function() {
-      getUnorderedList();
-    });
+  function deleteUnorderedBookFromServer(index, callback) {
+    $.post('/api/books/delete-from-unordered', {bookId: index}, callback);
   }
 
-  function checkIfUnorderedSectionEmpty() {
+  function showPlaceholderIfSectionIsEmpty() {
     var numberOfItems = $('.unordered-books li').length;
     if(numberOfItems === 0) {
       $('.unordered-wrapper').append('<p class="empty">Nothing here</p>');

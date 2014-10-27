@@ -4,21 +4,21 @@ $(function() {
 
   $('.unordered-books button:not(.second)').on('click', function() {
     if ($('.unordered-wrapper').hasClass('slided-up')) {
+      removeHtmlUnderSlider();
       slideUnorderedListDown();
     }
     else {
       slideUnorderedListUp();
+      showNumberOfBookInUnordered();
     }
   });
 
   function slideUnorderedListUp() {
     $('.unordered-wrapper').addClass('slided-up');
     $('.unordered-wrapper').slideUp();
-    showNumberOfBookInUnordered();
   }
 
   function slideUnorderedListDown() {
-    removeHtmlUnderSlider();
     $('.unordered-wrapper').removeClass('slided-up');
     $('.unordered-wrapper').slideDown();
   }

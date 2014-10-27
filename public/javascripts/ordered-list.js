@@ -1,9 +1,9 @@
-  (function() {
+(function() {
   var orderedBooksArray = [];
 
   var orderedBooks = bookeeboo.orderedBooks = {
     init: function() {
-      getQueue(redrawOrderedListInHtml);
+      receiveQueueFromServer(redrawOrderedListInHtml);
 
       $(".ordered-books ul").sortable(sortingOrderedBooks);
 
@@ -12,11 +12,7 @@
         mouseleave: function() {$(this).find('.sorting-delete').remove();}
       }, "li:not('.empty')");
 
-      $('.ordered-books').on('click', '.sorting-delete', function() {
-        var el = $(this).closest('li');
-        var id = el.find('input').val();
-        deleteFromQueueOnServer(id);
-      });
+      $('.ordered-books').on('click', '.sorting-delete', deleteOrderedBook);
     }
   };
 
@@ -32,19 +28,29 @@
     stop: function( event, ui ) {
       $(".ordered-books").removeClass("start-sorting");
       var orderedIds = findOrderedIds();
+      
       sendNewOrderToServer(orderedIds);
       updateOrderedBooksIndexes();  
     },
     receive: function( event, ui ) {
-      var unorderedIds = findUnorderedIds();
-      $.post('/api/order/unordered', {unordered: unorderedIds});
+      var unorderedIds = bookeeboo.unorderedBooks.findUnorderedIds();
+      bookeeboo.unorderedBooks.sendUnorderedIdsOrderToServer(unorderedIds);
 
       var orderedIds = findOrderedIds();
       $.post('/api/order/queue', {queue: orderedIds}, function() {
-        getQueue(redrawOrderedListInHtml);
+        receiveQueueFromServer(redrawOrderedListInHtml);
       });
     }
   };
+
+  function deleteOrderedBook() {
+    var el = $(this).closest('li');
+    var id = el.find('input').val();
+    
+    deleteFromQueueOnServer(id, function() {
+      receiveQueueFromServer(redrawOrderedListInHtml);
+    });
+  }
 
   function updateOrderedBooksIndexes() {
     $('.ordered-books li').each(function(index) {
@@ -52,7 +58,7 @@
     });
   }
 
-  function getQueue(successCallback) {
+  function receiveQueueFromServer(successCallback) {
     $.ajax('/api/books/queue', {
       success: function(response) {
         orderedBooksArray = response;
@@ -74,7 +80,7 @@
   }
 
   function sendNewOrderToServer(orderedIds) {
-    $.post('/api/order/queue', {queue: orderedIds}, getQueue);
+    $.post('/api/order/queue', {queue: orderedIds}, receiveQueueFromServer);
   }
 
   function rewriteOrderOfOrderedBooks(list) {
@@ -98,19 +104,8 @@
     }, 300);
   }
 
-  function deleteFromQueueOnServer(index) {
-    $.post('/api/books/delete-from-queue', {bookId: index}, function() {
-      getQueue(redrawOrderedListInHtml); 
-    });
-  }
-
-  function findUnorderedIds() {
-    unorderedIds = [];
-    $(".unordered-books li").each(function() {
-      var value = $(this).find('input').val();
-      unorderedIds.push(parseInt(value));
-    });
-    return unorderedIds;
+  function deleteFromQueueOnServer(index, callback) {
+    $.post('/api/books/delete-from-queue', {bookId: index}, callback);
   }
 
   function findOrderedIds() {
@@ -140,7 +135,7 @@
     if (colorNumber > 300) {
       $(container).addClass('colorBl');
     }
-    else if (colorNumber <= 300) {
+    else {
       $(container).addClass('colorWh');
     }
   }
