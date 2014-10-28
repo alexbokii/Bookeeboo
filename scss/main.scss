@@ -536,12 +536,12 @@ header {
 			position: absolute;
 			left: 5px;
 			top: 200px;
+			overflow: hidden;
 			width: 140px;
-			height: 40px;
+			height: 44px;
 			-moz-box-sizing: border-box;
 			box-sizing: border-box;
 			color: #fff;
-			// margin: 0 0 10px 0;
 			@include text(0.755em, 300);
 		}
 		.index {
