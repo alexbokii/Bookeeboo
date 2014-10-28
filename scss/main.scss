@@ -31,8 +31,8 @@ $bg-section: #262F38;
 
 * {
 	padding: 0;
-	margin: 0;
-}
+	margin: 0px;	
+top: }
 
 html {
 	height: 100%;
@@ -305,7 +305,7 @@ header {
 	}
 	.book-cover {
 		display: block;
-		width: 130px;
+		width: 11%;
 		height: 180px;
 		float: left;
 		background-size: 100% 100%;
@@ -313,7 +313,7 @@ header {
 	}
 	.book-description {
 		overflow: hidden;
-		width: 1000px;
+		width: 88%;
 		float: left;
 		-moz-box-sizing: border-box;
 		box-sizing: border-box;
@@ -338,6 +338,7 @@ header {
 		font-family: inherit;
 		color: #fff;
 		outline: none;
+		clear: both;
 	}
 	.separate-line {
 		width: 1150px;
@@ -345,7 +346,6 @@ header {
 		margin: 0 auto;
 		margin-top: 30px;
 		background-color: #3D4348;
-		// margin: 20px 0;
 	}
 }
 
