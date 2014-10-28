@@ -533,11 +533,15 @@ header {
 		text-align: center;
 		background-color: #515960;
 		span.title {
+			position: absolute;
+			left: 5px;
+			top: 200px;
+			width: 140px;
 			height: 40px;
 			-moz-box-sizing: border-box;
 			box-sizing: border-box;
 			color: #fff;
-			margin: 5px 10px 10px 10px;
+			// margin: 0 0 10px 0;
 			@include text(0.755em, 300);
 		}
 		.index {
@@ -550,6 +554,8 @@ header {
 			@include text(0.675em, 300);
 		}
 		img {
+			position: absolute;
+			left: 10px;
 			width: 130px;
 			height: 180px;
 		}
