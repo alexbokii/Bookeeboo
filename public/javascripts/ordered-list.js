@@ -94,7 +94,7 @@
     
     $(".ordered-books ul").append(list);
 
-    $('.ordered-books li h5').each(function() {
+    $('.ordered-books li span.title').each(function() {
       $clamp(this, {clamp: 'auto'});
     });
 

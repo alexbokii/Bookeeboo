@@ -5,7 +5,7 @@ var common = bookeeboo.common = {
       var htmlListItem = ("<li>"
         + "<input type='hidden' value='" + array[i].id + "' />"
         + "<img src='" + array[i].imageUrl + "'/>"
-        + "<h5>" + array[i].title + "</h5>"
+        + "<span class='title'>" + array[i].title + "</span>"
         + "<div class='index'>" + (i + 1) + "</div>"
         + "</li>");
       htmlList.push(htmlListItem);

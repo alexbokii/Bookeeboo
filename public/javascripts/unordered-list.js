@@ -80,7 +80,7 @@
     $(".unordered-books ul").empty();
 
     $(".unordered-books ul").append(htmlList);
-    $(".unordered-books ul li h5, .unordered-books ul li .index").hide();
+    $(".unordered-books ul li span.title, .unordered-books ul li .index").hide();
 
     updateNumberOfUnorderedBooks();
 
