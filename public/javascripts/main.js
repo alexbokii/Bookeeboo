@@ -1,6 +1,6 @@
 $(function() {
   // Slide effect iof unordered books section
-  $(".booksnumber-keeper, .unordered-line").hide();
+  $('.hidden-pageKeeper').hide();
 
   $('.unordered-books button:not(.second)').on('click', function() {
     if ($('.unordered-wrapper').hasClass('slided-up')) {
@@ -9,29 +9,33 @@ $(function() {
     }
     else {
       slideUnorderedListUp();
-      showNumberOfBookInUnordered();
+      setTimeout(function() {
+        showNumberOfBookInUnordered();
+      }, 500);
     }
   });
 
   function slideUnorderedListUp() {
     $('.unordered-wrapper').addClass('slided-up');
+    setTimeout(function() {
+      $('button.up').css('background-image', 'url(../images/icon-unordered-up.png)');
+      $('button.bottom').css('background-image', 'url(../images/icon-unordered-bottom.png)');
+    }, 500);
     $('.unordered-wrapper').slideUp();
   }
 
   function slideUnorderedListDown() {
     $('.unordered-wrapper').removeClass('slided-up');
+    $('button.bottom').css('background-image', 'url(../images/icon-unordered-up.png)');
+    $('button.up').css('background-image', 'url(../images/icon-unordered-bottom.png)');
     $('.unordered-wrapper').slideDown();
   }
 
   function showNumberOfBookInUnordered() {
-    $('.unordered-books').animate({'height':'55px'}, 300, function() {
-      $('.booksnumber-keeper, .unordered-line').show();
-    });
+    $('.hidden-pageKeeper').show("slow");
   }
 
   function removeHtmlUnderSlider() {
-    $('.unordered-books').css({'height':''});
-    $(".booksnumber-keeper, .unordered-line").hide();
+    $('.hidden-pageKeeper').hide();
   }
-
 });

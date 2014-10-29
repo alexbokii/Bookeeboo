@@ -443,6 +443,9 @@ header {
 .unordered-books { 
 	background-color: $bg-section;
 	position: relative;
+	.hidden-pageKeeper {
+		height: 55px;
+	}
 	.unordered-line {
 		width: 100%;
 		height: 2px;
@@ -482,12 +485,12 @@ header {
 		cursor: pointer;
 	}
 		.up {
-			background-image: url(../images/icon-unordered-up.png);
-			top: -10px;
+			background-image: url(../images/icon-unordered-bottom.png);
+			top: -19px;
 		}
 		.bottom {
-			background-image: url(../images/icon-unordered-bottom.png);
-			bottom: -10px;
+			background-image: url(../images/icon-unordered-up.png);
+			bottom: -19px;
 		}
 	.unordered-wrapper {
 		background-color: $bg-base;
