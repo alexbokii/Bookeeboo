@@ -119,6 +119,10 @@ header {
 			@include text(1.1em, 300);
 		}
 	}
+  p.error {
+    width: 100%;
+    color: yellow;
+  }
 	p {
 		color: $font-color;
 		width: 30%;
