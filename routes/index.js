@@ -33,7 +33,10 @@ router.post('/', function(req, res) {
   var type = req.body.type;
 
   if (!email || !password || !type) {
-    return res.send(500, {error: "Required fields are not present"}); 
+    req.flash('error', "Please, enter your credentials");
+    res.redirect('/');
+    
+    return;
   }
 
   if (type === 'signup') {
