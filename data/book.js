@@ -1,10 +1,12 @@
 var book = {};
+var path = require('path');
 var downloadImage = require('../lib/utils/downloadImage'),
     _ = require('lodash');
 
 book.save = function(book, isDefault) {
   var coverImageName = _.last(book.imageUrl.split('/')).replace('%', '');
-  var localPath = 'public/images/covers/' + coverImageName;
+  var localPath = path.join(process.env.PWD, 'public', 'images', 'covers', coverImageName);
+  //var localPath = '/home/bookeeboo/Bookeeboo/public/images/covers/' + coverImageName;
   var savePath = '/images/covers/' + coverImageName;
 
   return downloadImage(book.imageUrl, localPath)
