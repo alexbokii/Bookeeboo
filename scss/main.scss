@@ -9,7 +9,7 @@ $bg-section: #262F38;
 }
 
 @mixin autowidth {
-	width: intrinsic; //Safari, Webkit
+	width: intrinsic;
 	width: -moz-max-content;
 	width: -webkit-max-content;
 }
@@ -49,6 +49,10 @@ body {
 a {
 	text-decoration: none;
 	color: $font-color;
+}
+
+button:focus {
+	outline: 0;
 }
 
 .input-field {
@@ -594,7 +598,6 @@ footer {
 	padding: 20px 50px;
 	overflow: hidden;
 	color: $font-color;
-	
     .ft-description {
 		float: left;
 		width: 50%;
@@ -611,9 +614,10 @@ footer {
 	}
 	.social {
 		float: right;
-		width: 180px;
+		width: 140px;
 		text-align: right;
 		ul {
+			margin-top: 50px;
 			padding: 10px 0;
 			overflow: hidden;
 			li {
