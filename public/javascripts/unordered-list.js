@@ -59,9 +59,9 @@
         unorderedBooksArray = response;
         var htmlUnordered = common.buildBookHtml(unorderedBooksArray);
         rewriteOrederOfUnorderedBooks(htmlUnordered);
-        
-        if (callback) {
-          callback();  
+
+        if (callback && typeof callback == 'function') {
+          callback();
         }
       },
       error: function(request, errorType, errorMessage) {
@@ -100,4 +100,3 @@
 
 })(); // end of main function
 
-  
